@@ -1,6 +1,4 @@
-.App {
-  text-align: center;
-}
+
 
 .App-logo {
   height: 40vmin;
@@ -35,4 +33,71 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.floating-input {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.floating-input input,
+.floating-input textarea {
+  width: 100%;
+  padding: 1.2rem 0.75rem 0.4rem;
+  font-size: 1rem;
+  border: 1px solid #efefef;
+  border-radius: 8px;
+  background: #eff0f6;
+}
+
+.floating-input label {
+  position: absolute;
+  left: 0.75rem;
+  top: 1rem;
+  background: transparent;
+  padding: 0 4px;
+  color: #888;
+  font-size: 1rem;
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+.floating-input input:focus + label,
+.floating-input textarea:focus + label,
+.floating-input label.filled {
+  top: 0.1rem;
+  left: 0.6rem;
+  font-size: 0.75rem;
+  color: #007bff;
+}
+
+
+
+.hover-link {
+  position: relative;
+  display: inline-block;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  width: 100%;
+}
+
+.hover-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0%;
+  height: 2px;
+  background: #000;
+  transition: width 0.3s ease;
+}
+
+.hover-link:hover {
+  color: #000;
+  cursor: pointer;
+}
+
+.hover-link:hover::after {
+  width: 50%;
 }
