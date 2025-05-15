@@ -1,0 +1,62 @@
+name: Node CI
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: dev
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: build and push docker images
+        run: |
+          make alpha
+        env:
+          CI: false
+
+      - name: SSH Commands
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          command_timeout: 10m
+          script: |
+            ~/alpha/docker_login.sh
+            ~/alpha/pull_images.sh
+            cd ~/alpha && ./up.sh
+
+      - name: Slack notification
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_USERNAME: github action
+          SLACK_OVERRIDE_MESSAGE: "New build pushed to DEV site (https://dev.dogoodpoints.com)"
+        uses: Ilshidur/action-slack@master
+        with:
+          args: "New build pushed to DEV site (https://dev.dogoodpoints.com)"

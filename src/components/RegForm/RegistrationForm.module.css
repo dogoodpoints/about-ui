@@ -1,0 +1,13 @@
+.heading {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+.wrapper {
+    padding: 96px 0;
+    justify-content: center;
+    align-items: center;
+    background-color: #f7f7fc;
+    overflow-x: hidden;
+    max-width: 100%;
+}
