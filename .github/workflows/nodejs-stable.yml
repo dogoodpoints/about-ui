@@ -45,7 +45,7 @@ jobs:
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_USERNAME: github action
-          SLACK_OVERRIDE_MESSAGE: "New brand-ui pushed to PROD registry"
+          SLACK_OVERRIDE_MESSAGE: "New aboutui pushed to PROD registry"
         uses: Ilshidur/action-slack@master
         with:
-          args: "New brand-ui pushed to PROD registry"
+          args: "New about-ui pushed to PROD registry"

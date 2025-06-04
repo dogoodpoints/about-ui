@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button, Col, Row } from "reactstrap";
 import classes from "./ScrollJacker.module.css";
 import AutoDisappearText from "../Auto-disappear-text/AutoDisappearText";
+
 const steps = [
   "Nonprofits are mission-driven-but often resource-limited",
   "Businesses are resource-rich but often impact-hungry",
@@ -11,19 +12,32 @@ const steps = [
 
 export default function ScrollJackerSection() {
   const [index, setIndex] = useState(0);
-  const [showCircles, setShowCircles] = useState(false);
   const [unlockScroll, setUnlockScroll] = useState(false);
   const [completedOnce, setCompletedOnce] = useState(false);
+
+  // Animation states
+  const [circleStage, setCircleStage] = useState(0);
+  const [circleTextsVisible, setCircleTextsVisible] = useState(true);
+  const [animationStep, setAnimationStep] = useState(0);
+  const [overlayText, setOverlayText] = useState("");
+  const [currentText, setCurrentText] = useState("");
+  const [showWoman, setShowWoman] = useState(false);
+  const [showDuo, setShowDuo] = useState(false);
+  const [showPieChart, setShowPieChart] = useState(false);
+  const [showNotes, setShowNotes] = useState(false);
+  const [showVolunteer, setShowVolunteer] = useState(false);
+  const [showIntersect, setShowIntersect] = useState(false);
+  const [showHandshake, setShowHandshake] = useState(false);
+  const [showFirst, setShowFirst] = useState(false);
+  const [showSecond, setShowSecond] = useState(false);
+  const [showThird, setShowThird] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
 
   const sectionRef = useRef(null);
   const activeRef = useRef(false);
   const lockRef = useRef(false);
   const lastScrollY = useRef(window.scrollY);
   const lastDirection = useRef("down");
-  const [showFirst, setShowFirst] = useState(true);
-  const [showSecond, setShowSecond] = useState(false);
-  const [showThird, setShowThird] = useState(false);
-  const [showOverlay, setShowOverlay] = useState(false);
 
   // Watch scroll direction
   useEffect(() => {
@@ -50,7 +64,6 @@ export default function ScrollJackerSection() {
         const fromTop =
           window.scrollY < entry.boundingClientRect.top + window.scrollY;
 
-        // Only start scroll-jack if scrolling down and not completed before
         if (
           entering &&
           lastDirection.current === "down" &&
@@ -73,6 +86,37 @@ export default function ScrollJackerSection() {
     };
   }, [unlockScroll, completedOnce]);
 
+  // Effect to manage overlay text based on animation step
+  useEffect(() => {
+    switch (animationStep) {
+      case 1: // During woman and duo animation
+        setCurrentText("Imagine a space where strategy meets service...");
+        break;
+      case 2: // During pie chart and notes
+        setCurrentText(
+          "At the intersection of mission and market lies true collaboration."
+        );
+        break;
+      case 3: // During volunteer and intersect
+        setCurrentText("This is where real change begins.");
+        break;
+      default:
+        setCurrentText("");
+    }
+  }, [animationStep]);
+
+  // Effect to unlock scroll when all animations are complete
+  useEffect(() => {
+    if (showOverlay) {
+      const timeout = setTimeout(() => {
+        setUnlockScroll(true);
+        setCompletedOnce(true);
+        document.body.style.overflow = "";
+      }, 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [showOverlay]);
+
   // Handle scroll-lock steps
   useEffect(() => {
     const onWheel = (e) => {
@@ -81,10 +125,31 @@ export default function ScrollJackerSection() {
       e.preventDefault();
       lockRef.current = true;
 
+      // Sequential animation progression
       if (index < steps.length - 1) {
         setIndex((i) => i + 1);
-      } else if (!showCircles) {
-        setShowCircles(true);
+      } else if (index === steps.length - 1 && circleStage === 0) {
+        setCircleStage(1);
+        setCircleTextsVisible(false);
+      } else if (!showWoman && !showDuo) {
+        setShowWoman(true);
+        setShowDuo(true);
+        setOverlayText("Imagine a space where strategy meets service...");
+      } else if (!showPieChart && !showNotes) {
+        setShowPieChart(true);
+        setShowNotes(true);
+        setOverlayText(
+          "At the intersection of mission and market lies true collaboration."
+        );
+      } else if (!showVolunteer && !showIntersect) {
+        setShowVolunteer(true);
+        setShowIntersect(true);
+        setOverlayText("This is where real change begins.");
+      } else if (!showHandshake) {
+        setShowHandshake(true);
+        setOverlayText("");
+      } else if (!showOverlay) {
+        setShowOverlay(true);
       }
 
       setTimeout(() => {
@@ -96,19 +161,19 @@ export default function ScrollJackerSection() {
     return () => {
       document.removeEventListener("wheel", onWheel);
     };
-  }, [index, showCircles, unlockScroll]);
-
-  // Allow scroll after circles
-  useEffect(() => {
-    if (showCircles) {
-      const timeout = setTimeout(() => {
-        setUnlockScroll(true);
-        setCompletedOnce(true);
-        document.body.style.overflow = "";
-      }, 2000);
-      return () => clearTimeout(timeout);
-    }
-  }, [showCircles]);
+  }, [
+    index,
+    circleStage,
+    showWoman,
+    showDuo,
+    showPieChart,
+    showNotes,
+    showVolunteer,
+    showIntersect,
+    showHandshake,
+    showOverlay,
+    unlockScroll,
+  ]);
 
   return (
     <div
@@ -122,8 +187,14 @@ export default function ScrollJackerSection() {
       className="d-flex align-items-center justify-content-center"
     >
       <AnimatePresence mode="wait">
-        {!showCircles ? (
-          <div className="w-100">
+        {circleStage === 0 ? (
+          <motion.div
+            key="initial-content"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="w-100"
+          >
             <img
               src="/images/venbg.png"
               alt="bg"
@@ -136,7 +207,7 @@ export default function ScrollJackerSection() {
                   initial={{ opacity: 0, y: 120, filter: "blur(6px)" }}
                   animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   exit={{ opacity: 0, y: -130, filter: "blur(8px)" }}
-                  transition={{ duration: 1.5, ease: "easeInOut" }}
+                  transition={{ duration: 1.5, ease: "easeOut" }}
                   className="text-center display-4"
                   style={{ fontWeight: "bold" }}
                 >
@@ -144,55 +215,61 @@ export default function ScrollJackerSection() {
                 </motion.div>
               </Col>
             </Row>
-          </div>
+          </motion.div>
         ) : (
           <>
-            {showFirst && (
-              <AutoDisappearText
-                delay={0}
-                duration={4000}
-                text=" Imagine a space where strategy meets service..."
-                onDisappear={() => {
-                  setShowFirst(false);
-                  setTimeout(() => setShowSecond(true), 200); // Optional gap
-                }}
-              ></AutoDisappearText>
-            )}
-            {showSecond && (
-              <AutoDisappearText
-                delay={0}
-                duration={4000}
-                text=" At the intersection of mission and market lies true collaboration."
-                onDisappear={() => {
-                  setShowSecond(false);
-                  setTimeout(() => setShowThird(true), 200); // Optional gap
-                }}
-              ></AutoDisappearText>
-            )}
+            {/* Floating Text Overlay */}
+            <AnimatePresence mode="wait">
+              {overlayText && (
+                <motion.div
+                  key={overlayText}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -50 }}
+                  transition={{ duration: 1, ease: "easeOut" }}
+                  style={{
+                    position: "fixed",
+                    top: "20%",
+                    left: 0,
+                    right: 0,
+                    zIndex: 1000,
+                    textAlign: "center",
+                    pointerEvents: "none",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "inline-block",
+                      padding: "20px 40px",
+                      background: "transparent",
+                      borderRadius: "10px",
+                      color: "black",
+                      fontSize: "28px",
+                      fontWeight: "bold",
+                      maxWidth: "80%",
+                      margin: "0 auto",
+                    }}
+                  >
+                    {overlayText}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-            {showThird && (
-              <AutoDisappearText
-                delay={0}
-                duration={0}
-                text=" This is where real change begins."
-                onDisappear={() => {
-                  setTimeout(() => setShowOverlay(true), 5000); // Optional gap
-                }}
-              ></AutoDisappearText>
-            )}
-
+            {/* Main Content */}
             <motion.div
               key="circles"
               className="position-absolute w-100 h-100 d-flex justify-content-center align-items-center"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1 }}
+              transition={{ duration: 1, ease: "easeOut" }}
             >
+              {/* Yellow Circle */}
               <motion.div
                 className="position-absolute rounded-circle"
                 initial={{ x: "100vw" }}
                 animate={{ x: 0 }}
-                transition={{ duration: 4, ease: "easeInOut" }}
+                transition={{ duration: 2, ease: "easeOut" }}
                 style={{
                   right: "22%",
                   top: "30%",
@@ -206,74 +283,84 @@ export default function ScrollJackerSection() {
                   alt="bg"
                   style={{ height: 500, width: "auto", opacity: 0.8 }}
                 />
-                <motion.div
-                  animate={{ opacity: 0 }}
-                  transition={{ duration: 8 }}
-                  style={{
-                    position: "absolute",
-                    top: "80%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    fontSize: "24px",
-                    opacity: 1,
-                  }}
-                >
-                  Nonprofit
-                </motion.div>
-                <motion.div
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 3, delay: 4 }}
-                  style={{
-                    opacity: 0,
-                  }}
-                >
-                  <img
-                    src="/images/woman.png"
-                    alt="bg"
+                {circleTextsVisible && (
+                  <motion.div
+                    initial={{ opacity: 1 }}
+                    animate={{ opacity: 0 }}
+                    transition={{ duration: 1 }}
                     style={{
                       position: "absolute",
-                      top: "46%",
-                      right: "-9%",
-                      height: 450,
-                      width: "auto",
-                      zIndex: 9,
-                      transform: "translate(-30%, -37%)",
-                      opacity: 1,
+                      top: "80%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      fontSize: "24px",
                     }}
-                  />
-                </motion.div>
-                <motion.div
-                  className="position-absolute"
-                  initial={{ x: "100vw" }}
-                  animate={{ x: 300 }}
-                  transition={{ duration: 4, delay: 3.5 }}
-                  style={{ top: -22 }}
-                >
-                  <img
-                    src="/images/piechart.png"
-                    alt="pie"
-                    style={{ height: 150, width: "auto", opacity: 0.8 }}
-                  />
-                </motion.div>
-                <motion.div
-                  className="position-absolute"
-                  initial={{ x: "100vw" }}
-                  animate={{ x: 450 }}
-                  transition={{ duration: 6, delay: 6 }}
-                  style={{ top: 100 }}
-                >
-                  <img
-                    src="/images/notes.png"
-                    alt="pie"
-                    style={{ height: 260, width: "auto" }}
-                  />
-                </motion.div>
+                  >
+                    Nonprofit
+                  </motion.div>
+                )}
+
+                {showWoman && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                  >
+                    <img
+                      src="/images/woman.png"
+                      alt="woman"
+                      style={{
+                        position: "absolute",
+                        top: "46%",
+                        right: "-9%",
+                        height: 450,
+                        width: "auto",
+                        zIndex: 9,
+                        transform: "translate(-30%, -37%)",
+                      }}
+                    />
+                  </motion.div>
+                )}
+
+                {showPieChart && (
+                  <motion.div
+                    className="position-absolute"
+                    initial={{ x: "100vw" }}
+                    animate={{ x: 300 }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                    style={{ top: -22 }}
+                  >
+                    <img
+                      src="/images/piechart.png"
+                      alt="pie"
+                      style={{ height: 150, width: "auto", opacity: 0.8 }}
+                    />
+                  </motion.div>
+                )}
+
+                {showNotes && (
+                  <motion.div
+                    className="position-absolute"
+                    initial={{ x: "100vw" }}
+                    animate={{ x: 450 }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                    style={{ top: 100 }}
+                  >
+                    <img
+                      src="/images/notes.png"
+                      alt="notes"
+                      style={{ height: 260, width: "auto" }}
+                    />
+                  </motion.div>
+                )}
               </motion.div>
+
+              {/* Blue Circle */}
               <motion.div
                 className="position-absolute rounded-circle"
                 initial={{ x: "-100vw" }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 4, ease: "easeInOut" }}
+                animate={{ x: 0 }}
+                transition={{ duration: 2, ease: "easeOut" }}
                 style={{
                   left: "22.2%",
                   top: "30%",
@@ -282,129 +369,204 @@ export default function ScrollJackerSection() {
                   padding: "30px",
                 }}
               >
-                <motion.div
-                  animate={{ opacity: 0 }}
-                  initial={{ opacity: 1 }}
-                  transition={{ duration: 8 }}
-                  style={{
-                    position: "absolute",
-                    top: "80%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    fontSize: "24px",
-                    opacity: 1,
-                    zIndex: 9,
-                  }}
-                >
-                  Business
-                </motion.div>
-                <motion.div
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 2, delay: 5 }}
-                  style={{
-                    opacity: 0,
-                  }}
-                >
-                  <img
-                    src="/images/duo.png"
-                    alt="bg"
-                    style={{
-                      position: "absolute",
-                      top: "59.5%",
-                      left: "39%",
-                      height: 400,
-                      width: "auto",
-                      zIndex: 9,
-                      transform: "translate(-50%, -50%)",
-                      opacity: 1,
-                    }}
-                  />
-                </motion.div>
-
                 <img
                   src="/images/blue_circle.png"
                   alt="bg"
                   style={{ height: 500, width: "auto", opacity: 0.8 }}
                 />
+                {circleTextsVisible && (
+                  <motion.div
+                    initial={{ opacity: 1 }}
+                    animate={{ opacity: 0 }}
+                    transition={{ duration: 1 }}
+                    style={{
+                      position: "absolute",
+                      top: "80%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      fontSize: "24px",
+                      zIndex: 9,
+                    }}
+                  >
+                    Business
+                  </motion.div>
+                )}
+
+                {showDuo && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                  >
+                    <img
+                      src="/images/duo.png"
+                      alt="duo"
+                      style={{
+                        position: "absolute",
+                        top: "59.5%",
+                        left: "39%",
+                        height: 400,
+                        width: "auto",
+                        zIndex: 9,
+                        transform: "translate(-50%, -50%)",
+                      }}
+                    />
+                  </motion.div>
+                )}
               </motion.div>
-              <motion.div
-                initial={{ x: "-100vw" }}
-                animate={{ x: 0 }}
-                transition={{ duration: 6, delay: 6 }}
-                style={{
-                  position: "absolute",
-                  top: "20%",
-                  left: "17%",
-                  height: 450,
-                  width: "auto",
-                  zIndex: 9,
-                  opacity: 1,
-                }}
-              >
-                <img
-                  src="/images/volunteer.png"
-                  alt="volunteer"
+
+              {showVolunteer && (
+                <motion.div
+                  initial={{ x: "-100vw" }}
+                  animate={{ x: 0 }}
+                  transition={{ duration: 1, ease: "easeOut" }}
                   style={{
+                    position: "absolute",
+                    top: "20%",
+                    left: "17%",
+                    height: 450,
                     width: "auto",
-                    height: "100%",
+                    zIndex: 9,
                   }}
+                >
+                  <img
+                    src="/images/volunteer.png"
+                    alt="volunteer"
+                    style={{
+                      width: "auto",
+                      height: "100%",
+                    }}
+                  />
+                </motion.div>
+              )}
+
+              {showIntersect && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 1, ease: "easeOut" }}
+                  style={{ position: "absolute", top: "38%" }}
+                >
+                  <img src="/images/intersect.png" alt="intersect" />
+                </motion.div>
+              )}
+
+              {showHandshake && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 1, ease: "easeOut" }}
+                  style={{ position: "absolute", top: "38%" }}
+                >
+                  <img src="/images/handshake.png" alt="handshake" />
+                </motion.div>
+              )}
+
+              {/* Auto-disappear text components */}
+              {showFirst && (
+                <AutoDisappearText
+                  delay={0}
+                  duration={4000}
+                  text=" Imagine a space where strategy meets service..."
+                  onDisappear={() => setShowFirst(false)}
                 />
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 4, delay: 10 }}
-                style={{ position: "absolute", top: "38%" }}
-              >
-                <img src="/images/intersect.png" alt="intersect" />
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 6, delay: 12 }}
-                style={{ position: "absolute", top: "38%" }}
-              >
-                <img src="/images/handshake.png" alt="handshake" />
-              </motion.div>
-              {/* modal overlay */}
+              )}
+              {showSecond && (
+                <AutoDisappearText
+                  delay={0}
+                  duration={4000}
+                  text=" At the intersection of mission and market lies true collaboration."
+                  onDisappear={() => setShowSecond(false)}
+                />
+              )}
+              {showThird && (
+                <AutoDisappearText
+                  delay={0}
+                  duration={4000}
+                  text=" This is where real change begins."
+                  onDisappear={() => setShowThird(false)}
+                />
+              )}
+
+              {/* Final Overlay with Button */}
               {showOverlay && (
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 0.7 }}
-                  transition={{ ease: "easeIn" }}
-                  className="absolute top-0 bottom-0 left-0 right-0 z-[9] bg-black w-100 h-100"
+                  transition={{ duration: 1, ease: "easeOut" }}
+                  className="position-absolute top-0 bottom-0 left-0 right-0"
                   style={{
-                    opacity: 0.7,
+                    backgroundColor: "black",
                     zIndex: 99,
+                    width: "100%",
+                    height: "100%",
                   }}
                 >
                   <Row
-                    className="justify-content-center align-items-end h-100 align-content-end"
+                    className="justify-content-center align-items-end h-100"
                     style={{ paddingBottom: 100 }}
                   >
-                    <Col
-                      xs={12}
-                      className="text-center"
-                      style={{ height: 100 }}
-                    >
-                      <div
-                        className="mt-auto"
-                        style={{ fontSize: 22, fontWeight: "600" }}
-                      >
-                        Ready to build something bigger than yourself?
+                    <Col xs={12} className="text-center">
+                      <div className="mb-5">
+                        <h2
+                          style={{
+                            color: "white",
+                            fontSize: "24px",
+                            fontWeight: "bold",
+                            marginBottom: "60px",
+                          }}
+                        >
+                          Ready to build something bigger than yourself?
+                        </h2>
                       </div>
-                    </Col>
-                    <Col
-                      xs={12}
-                      className="text-center"
-                      style={{ height: 100 }}
-                    >
-                      <Button className="mx-3 secondary-btn hover-button p-3">
-                        For Nonprofits
-                      </Button>
-                      <Button className="primary-btn hover-button p-3">
-                        For Business
-                      </Button>
+                      <div className="d-flex justify-content-center gap-4">
+                        <Button
+                          size="lg"
+                          className={classes.headerButton}
+                          style={{
+                            border: "2px solid #2C55F9",
+                            color: "#2C55F9",
+                            backgroundColor: "transparent",
+                          }}
+                          onMouseOver={(e) => {
+                            e.currentTarget.style.backgroundColor = "#2C55F9";
+                            e.currentTarget.style.color = "white";
+                          }}
+                          onMouseOut={(e) => {
+                            e.currentTarget.style.backgroundColor =
+                              "transparent";
+                            e.currentTarget.style.color = "#2C55F9";
+                          }}
+                          onClick={() => {
+                            console.log("Business clicked");
+                          }}
+                        >
+                          For Business
+                        </Button>
+                        <Button
+                          size="lg"
+                          className={classes.headerButton}
+                          style={{
+                            border: "2px solid #FFBD01",
+                            color: "#FFBD01",
+                            backgroundColor: "transparent",
+                          }}
+                          onMouseOver={(e) => {
+                            e.currentTarget.style.backgroundColor = "#FFBD01";
+                            e.currentTarget.style.color = "black";
+                          }}
+                          onMouseOut={(e) => {
+                            e.currentTarget.style.backgroundColor =
+                              "transparent";
+                            e.currentTarget.style.color = "#FFBD01";
+                          }}
+                          onClick={() => {
+                            console.log("Nonprofit clicked");
+                          }}
+                        >
+                          For Nonprofits
+                        </Button>
+                      </div>
                     </Col>
                   </Row>
                 </motion.div>
