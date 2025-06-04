@@ -64,7 +64,7 @@ docker: clean
 	cp -a deploy/health_check.html ./build/dist
 	#cp -a landing/* ./build/dist
 	#
-	docker build -t brand-ui:latest build
+	docker build -t about-ui:latest build
 
 ##
 ## alpha
@@ -87,11 +87,11 @@ alpha: clean
 	cp -a deploy/health_check.html ./build/dist
 	#cp -a landing/* ./build/dist
 	#
-	docker build -t brand-ui:latest build
-	docker tag brand-ui:latest 846905504112.dkr.ecr.us-east-1.amazonaws.com/brand-ui:alpha
-	docker tag brand-ui:latest 846905504112.dkr.ecr.us-east-1.amazonaws.com/brand-ui:alpha-$(DOCKER_TAG_VERSION)
-	docker push 846905504112.dkr.ecr.us-east-1.amazonaws.com/brand-ui:alpha
-	docker push 846905504112.dkr.ecr.us-east-1.amazonaws.com/brand-ui:alpha-$(DOCKER_TAG_VERSION)
+	docker build -t about-ui:latest build
+	docker tag about-ui:latest 846905504112.dkr.ecr.us-east-1.amazonaws.com/about-ui:alpha
+	docker tag about-ui:latest 846905504112.dkr.ecr.us-east-1.amazonaws.com/about-ui:alpha-$(DOCKER_TAG_VERSION)
+	docker push 846905504112.dkr.ecr.us-east-1.amazonaws.com/about-ui:alpha
+	docker push 846905504112.dkr.ecr.us-east-1.amazonaws.com/about-ui:alpha-$(DOCKER_TAG_VERSION)
 
 ##
 ## beta
@@ -114,11 +114,11 @@ beta: clean
 	cp -a deploy/health_check.html ./build/dist
 	#cp -a landing/* ./build/dist
 	#
-	docker build -t brand-ui:latest build
-	docker tag brand-ui:latest 846905504112.dkr.ecr.us-east-1.amazonaws.com/brand-ui:beta
-	docker tag brand-ui:latest 846905504112.dkr.ecr.us-east-1.amazonaws.com/brand-ui:beta-$(DOCKER_TAG_VERSION)
-	docker push 846905504112.dkr.ecr.us-east-1.amazonaws.com/brand-ui:beta
-	docker push 846905504112.dkr.ecr.us-east-1.amazonaws.com/brand-ui:beta-$(DOCKER_TAG_VERSION)
+	docker build -t about-ui:latest build
+	docker tag about-ui:latest 846905504112.dkr.ecr.us-east-1.amazonaws.com/about-ui:beta
+	docker tag about-ui:latest 846905504112.dkr.ecr.us-east-1.amazonaws.com/about-ui:beta-$(DOCKER_TAG_VERSION)
+	docker push 846905504112.dkr.ecr.us-east-1.amazonaws.com/about-ui:beta
+	docker push 846905504112.dkr.ecr.us-east-1.amazonaws.com/about-ui:beta-$(DOCKER_TAG_VERSION)
 
 ##
 ## prod
@@ -141,11 +141,11 @@ prod: clean
 	cp -a deploy/health_check.html ./build/dist
 	#cp -a landing/* ./build/dist
 	#
-	docker build -t brand-ui:latest build
-	docker tag brand-ui:latest 846905504112.dkr.ecr.us-east-1.amazonaws.com/brand-ui:stable
-	docker tag brand-ui:latest 846905504112.dkr.ecr.us-east-1.amazonaws.com/brand-ui:stable-$(DOCKER_TAG_VERSION)
-	docker push 846905504112.dkr.ecr.us-east-1.amazonaws.com/brand-ui:stable
-	docker push 846905504112.dkr.ecr.us-east-1.amazonaws.com/brand-ui:stable-$(DOCKER_TAG_VERSION)
+	docker build -t about-ui:latest build
+	docker tag about-ui:latest 846905504112.dkr.ecr.us-east-1.amazonaws.com/about-ui:stable
+	docker tag about-ui:latest 846905504112.dkr.ecr.us-east-1.amazonaws.com/about-ui:stable-$(DOCKER_TAG_VERSION)
+	docker push 846905504112.dkr.ecr.us-east-1.amazonaws.com/about-ui:stable
+	docker push 846905504112.dkr.ecr.us-east-1.amazonaws.com/about-ui:stable-$(DOCKER_TAG_VERSION)
 
 ##
 ## help
