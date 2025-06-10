@@ -9,16 +9,22 @@ import {
   Col,
   Label,
   FormText,
+  Spinner,
 } from "reactstrap";
+import { motion, AnimatePresence } from "framer-motion";
 import classes from "./RegistrationForm.module.css";
 
 function RegistrationForm() {
   const [formData, setFormData] = useState({
-    name: "",
+    first: "",
+    last: "",
     email: "",
     subject: "",
     message: "",
+    orgType: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -27,9 +33,55 @@ function RegistrationForm() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    setIsLoading(true);
+    setShowSuccess(false);
+
+    try {
+      const response = await fetch(
+        "https://www.dogoodpoints.com/dgp/v1/forms/contact",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            first: formData.first,
+            last: formData.last,
+            email: formData.email,
+            subject: formData.orgType
+              ? `${formData.subject} - ${formData.orgType}`
+              : formData.subject,
+            message: formData.message,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to submit form");
+      }
+
+      // Clear form after successful submission
+      setFormData({
+        first: "",
+        last: "",
+        email: "",
+        subject: "",
+        message: "",
+        orgType: "",
+      });
+
+      setShowSuccess(true);
+      setTimeout(() => {
+        setShowSuccess(false);
+      }, 3000); // Hide success message after 3 seconds
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("Failed to submit form. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -41,28 +93,50 @@ function RegistrationForm() {
           </h3>
           <Form onSubmit={handleSubmit}>
             <Row className="flex-wrap mt-5 justify-content-center">
-              {/* Name */}
+              {/* First Name */}
               <Col sm="6">
                 <FormGroup className="floating-input">
                   <Input
                     type="text"
-                    name="name"
-                    id="name"
-                    value={formData.name}
+                    name="first"
+                    id="first"
+                    value={formData.first}
                     onChange={handleChange}
                     required
+                    disabled={isLoading}
                   />
                   <label
-                    className={formData.name ? "filled" : ""}
-                    htmlFor="name"
+                    className={formData.first ? "filled" : ""}
+                    htmlFor="first"
                   >
-                    Name
+                    First Name
+                  </label>
+                </FormGroup>
+              </Col>
+
+              {/* Last Name */}
+              <Col sm="6">
+                <FormGroup className="floating-input">
+                  <Input
+                    type="text"
+                    name="last"
+                    id="last"
+                    value={formData.last}
+                    onChange={handleChange}
+                    required
+                    disabled={isLoading}
+                  />
+                  <label
+                    className={formData.last ? "filled" : ""}
+                    htmlFor="last"
+                  >
+                    Last Name
                   </label>
                 </FormGroup>
               </Col>
 
               {/* Email */}
-              <Col sm="6">
+              <Col sm="12">
                 <FormGroup className="floating-input">
                   <Input
                     type="email"
@@ -71,6 +145,7 @@ function RegistrationForm() {
                     value={formData.email}
                     onChange={handleChange}
                     required
+                    disabled={isLoading}
                   />
                   <label
                     className={formData.email ? "filled" : ""}
@@ -91,6 +166,7 @@ function RegistrationForm() {
                     value={formData.subject}
                     onChange={handleChange}
                     required
+                    disabled={isLoading}
                   />
                   <label
                     className={formData.subject ? "filled" : ""}
@@ -113,6 +189,7 @@ function RegistrationForm() {
                       id="non-profit"
                       onChange={handleChange}
                       checked={formData.orgType === "non-profit"}
+                      disabled={isLoading}
                     />
                     <Label check htmlFor="non-profit">
                       Non-profit
@@ -129,6 +206,7 @@ function RegistrationForm() {
                       id="business"
                       onChange={handleChange}
                       checked={formData.orgType === "business"}
+                      disabled={isLoading}
                     />
                     <Label check htmlFor="business">
                       Business
@@ -150,6 +228,7 @@ function RegistrationForm() {
                     value={formData.message}
                     onChange={handleChange}
                     required
+                    disabled={isLoading}
                   />
                   <label
                     className={formData.message ? "filled" : ""}
@@ -161,17 +240,47 @@ function RegistrationForm() {
               </Col>
 
               <Col sm="12" className="w-100">
-                <Button
-                  color="primary"
-                  type="submit"
-                  className="w-100 p-2"
-                  style={{ backgroundColor: "#333" }}
+                <motion.div
+                  whileHover={!isLoading ? { scale: 1.02 } : {}}
+                  whileTap={!isLoading ? { scale: 0.98 } : {}}
                 >
-                  Submit
-                </Button>
+                  <Button
+                    color="primary"
+                    type="submit"
+                    className="w-100 p-2 position-relative"
+                    style={{ backgroundColor: "#333" }}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? <Spinner size="sm" color="light" /> : "Submit"}
+                  </Button>
+                </motion.div>
               </Col>
             </Row>
           </Form>
+
+          {/* Success Message */}
+          <AnimatePresence>
+            {showSuccess && (
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="mt-3 p-3 rounded"
+                style={{
+                  backgroundColor: "#4CAF50",
+                  color: "white",
+                }}
+              >
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  ✓ Form submitted successfully!
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </Col>
       </Row>
     </>
