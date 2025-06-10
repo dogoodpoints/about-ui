@@ -22,7 +22,7 @@ const Header = () => (
         </NavbarBrand>
         <div className="d-flex">
           <NavItem>
-            <Button 
+            <Button
               className="mx-3 secondary-btn hover-button"
               href="https://dev-nonprofits.dogoodpoints.com/"
               target="_blank"
@@ -32,7 +32,7 @@ const Header = () => (
             </Button>
           </NavItem>
           <NavItem>
-            <Button 
+            <Button
               className="primary-btn hover-button"
               href="https://dev-brands.dogoodpoints.com/"
               target="_blank"
