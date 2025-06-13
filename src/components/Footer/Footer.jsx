@@ -7,17 +7,18 @@ export default function Footer() {
   const handleClick = (link) => {
     window.open(link, "_blank");
   };
+
   return (
     <div className={classes.footer}>
       <Row>
-        <Col sm={1}>
+        <Col sm={1} xs={12}>
           <img
             src="/images/DGP.png"
             alt="Do good point"
             className={classes.dgp}
           />
         </Col>
-        <Col sm={2} style={{ marginLeft: "100px" }}>
+        <Col sm={2} xs={6} style={{ marginLeft: "100px" }}>
           <div
             style={{ textAlign: "left", fontWeight: "bold" }}
             className="mb-3"
@@ -39,7 +40,7 @@ export default function Footer() {
             Contact Us
           </div>
         </Col>
-        <Col sm={2}>
+        <Col sm={2} xs={6}>
           <div
             style={{ textAlign: "left", fontWeight: "bold" }}
             className="mb-3"
@@ -74,7 +75,7 @@ export default function Footer() {
           </div>
         </Col>
 
-        <Col sm={2}>
+        <Col sm={2} xs={12}>
           <div
             style={{ textAlign: "left", fontWeight: "bold" }}
             className="mb-3"
@@ -107,7 +108,7 @@ export default function Footer() {
               )
             }
           >
-            Fiscal Sponsership
+            Fiscal Sponsorship
           </div>
           <div
             className="mb-2 hover-link"
@@ -138,31 +139,41 @@ export default function Footer() {
         </Col>
       </Row>
       <Row className="justify-content-between mt-3">
-        <Col sm={3}>Copyright © {new Date().getFullYear()} Do Good Points.</Col>
-        <Col sm={4} className="text-start">
-          <span
-            onClick={() => handleClick("https://www.dogoodpoints.com/privacy")}
-          >
-            {" "}
-            Privacy
-          </span>{" "}
-          |{" "}
-          <span
-            onClick={() => handleClick("https://www.dogoodpoints.com/terms")}
-          >
-            {" "}
-            Terms.
-          </span>
+        <Col sm={3} xs={12} className="text-sm-start text-center mb-sm-0 mb-3">
+          Copyright © {new Date().getFullYear()} Do Good Points.
         </Col>
-        <Col sm={5} className="text-end">
+        <Col sm={4} xs={12} className="text-sm-start text-center mb-sm-0 mb-3">
+          <div className="d-flex align-items-center justify-content-center justify-content-sm-start">
+            <span
+              className="hover-link"
+              style={{ width: "60px" }}
+              onClick={() =>
+                handleClick("https://www.dogoodpoints.com/privacy")
+              }
+            >
+              Privacy
+            </span>
+            <span className="mx-1">|</span>
+            <span
+              className="hover-link"
+              style={{ width: "60px" }}
+              onClick={() => handleClick("https://www.dogoodpoints.com/terms")}
+            >
+              Terms
+            </span>
+          </div>
+        </Col>
+        <Col
+          sm={5}
+          xs={12}
+          className={`text-sm-end text-center ${classes.socialIconsWrapper}`}
+        >
           <motion.img
             src="/images/instagram.png"
             alt="insta"
             className={classes.logo}
             transition={{ type: "spring", stiffness: 300 }}
-            whileHover={{
-              scale: 1.2,
-            }}
+            whileHover={{ scale: 1.2 }}
             onClick={() =>
               handleClick("https://www.instagram.com/dogoodpoints/#")
             }
@@ -172,9 +183,7 @@ export default function Footer() {
             alt="fb"
             className={classes.logo}
             transition={{ type: "spring", stiffness: 300 }}
-            whileHover={{
-              scale: 1.2,
-            }}
+            whileHover={{ scale: 1.2 }}
             onClick={() => handleClick("https://www.facebook.com/dogoodpoints")}
           />
           <motion.img
@@ -182,9 +191,7 @@ export default function Footer() {
             alt="ticktok"
             className={classes.logo}
             transition={{ type: "spring", stiffness: 300 }}
-            whileHover={{
-              scale: 1.2,
-            }}
+            whileHover={{ scale: 1.2 }}
             onClick={() => handleClick("https://www.tiktok.com/@dogoodpoints")}
           />
           <motion.img
@@ -192,19 +199,15 @@ export default function Footer() {
             alt="twitter"
             className={classes.logo}
             transition={{ type: "spring", stiffness: 300 }}
-            whileHover={{
-              scale: 1.2,
-            }}
+            whileHover={{ scale: 1.2 }}
             onClick={() => handleClick("https://twitter.com/DoGoodPoints")}
           />
           <motion.img
             src="/images/linkedin.png"
             alt="linkedin"
-            style={{ height: 30, cursor: "pointer" }}
+            className={classes.logo}
             transition={{ type: "spring", stiffness: 300 }}
-            whileHover={{
-              scale: 1.2,
-            }}
+            whileHover={{ scale: 1.2 }}
             onClick={() =>
               handleClick("https://www.linkedin.com/company/do-good-points")
             }
