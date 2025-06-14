@@ -1,43 +1,32 @@
 import React from "react";
 import { Col, Row } from "reactstrap";
 import TextFadeIn from "../TextFadeIn.jsx/TextFadeIn";
+import classes from "./Suncountry.module.css";
 
 function Suncountry() {
   return (
-    <div style={{ position: "relative" }}>
+    <div className={classes.container}>
       <img
         src="/images/airlines.png"
         alt="airlines"
-        style={{ height: 435, width: "100%" }}
+        className={classes.bgImage}
       />
       <Row
-        className={"justify-content-center align-items-center"}
-        style={{
-          position: "absolute",
-          top: 0,
-          width: "100%",
-          height: "100%",
-
-          fontSize: "24px",
-          fontWeight: "bold",
-          color: "#fff",
-        }}
+        className={`justify-content-center align-items-center ${classes.contentWrapper}`}
       >
-        <Col sm={6}>
+        <Col xs={10} sm={8} md={6} className={classes.content}>
           <img
-            className="mb-4"
-            src={"/images/suncountrylogo.png"}
+            className={`mb-4 ${classes.logo}`}
+            src="/images/suncountrylogo.png"
             alt="suncountry"
-            style={{ width: "67px", height: "67px" }}
           />
           <TextFadeIn>
-            <div>
-              “In the past, we had to establish international subsidiaries,
-              ensure we were up to date on the regulations and tax code, and
-              have extra sets of books.”
+            <div className={classes.quote}>
+              "DoGood saved us months of legal work and let us launch a global
+              giving campaign in days."
             </div>
           </TextFadeIn>
-          <div className="mt-5" style={{ color: "white", fontSize: 16 }}>
+          <div className={`mt-5 ${classes.attribution}`}>
             Suncountry Airlines
           </div>
         </Col>
