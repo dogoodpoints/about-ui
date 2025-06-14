@@ -447,7 +447,7 @@ export default function ScrollJackerSection() {
                   transition={{ duration: 1, ease: "easeOut" }}
                   style={{ position: "absolute", top: "38%" }}
                 >
-                  <img src="/images/intersect.png" alt="intersect" />
+                  <img src="/images/intersect_one.png" alt="intersect" />
                 </motion.div>
               )}
 
