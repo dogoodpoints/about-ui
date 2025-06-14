@@ -538,7 +538,10 @@ export default function ScrollJackerSection() {
                             e.currentTarget.style.color = "#2C55F9";
                           }}
                           onClick={() => {
-                            console.log("Business clicked");
+                            window.open(
+                              "https://dev-brands.dogoodpoints.com/",
+                              "_blank"
+                            );
                           }}
                         >
                           For Business
@@ -561,7 +564,10 @@ export default function ScrollJackerSection() {
                             e.currentTarget.style.color = "#FFBD01";
                           }}
                           onClick={() => {
-                            console.log("Nonprofit clicked");
+                            window.open(
+                              "https://dev-nonprofits.dogoodpoints.com/",
+                              "_blank"
+                            );
                           }}
                         >
                           For Nonprofits

@@ -11,3 +11,98 @@
     margin-right: 30px;
     cursor: pointer;
 }
+
+.footerSection {
+    margin-bottom: 2rem;
+}
+
+.footerHeading {
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+.footerLink {
+    margin-bottom: 1rem;
+}
+
+.socialIcons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.copyrightSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+@media (max-width: 768px) {
+    .footer {
+        padding: 64px 48px;
+    }
+
+    .dgp {
+        height: 50px;
+        margin-bottom: 2rem;
+    }
+
+    .logo {
+        margin-right: 20px;
+    }
+
+    .footerHeading {
+        margin-bottom: 1rem;
+    }
+
+    .socialIcons {
+        justify-content: center;
+        margin-top: 2rem;
+    }
+
+    .copyrightSection {
+        text-align: center;
+        justify-content: center;
+    }
+
+    .copyrightSection > div {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .footer {
+        padding: 48px 24px;
+    }
+
+    .dgp {
+        height: 40px;
+    }
+
+    .logo {
+        height: 24px;
+        margin-right: 15px;
+    }
+
+    .footerHeading {
+        font-size: 16px;
+    }
+
+    .footerLink {
+        font-size: 14px;
+    }
+
+    .socialIcons {
+        gap: 1rem;
+    }
+
+    .copyrightSection {
+        font-size: 12px;
+    }
+}

@@ -10,13 +10,15 @@ import Suncountry from "./components/Suncountry/Suncountry";
 function App() {
   return (
     <div className="App">
-      <Header />
-      <Description />
-      <ScrollJacker />
-      <Partner />
-      <Suncountry />
-      <RegistrationForm />
-      <Footer />
+      <div className="app-container">
+        <Header />
+        <Description />
+        <ScrollJacker />
+        <Partner />
+        <Suncountry />
+        <RegistrationForm />
+        <Footer />
+      </div>
     </div>
   );
 }
