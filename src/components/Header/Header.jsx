@@ -30,9 +30,10 @@ const Header = () => {
             <NavItem>
               <Button
                 className="mx-3 secondary-btn hover-button"
-                href="https://dev-nonprofits.dogoodpoints.com/"
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={() =>
+                  (window.location.href =
+                    "https://nonprofits.dogoodpoints.com/")
+                }
               >
                 For Nonprofits
               </Button>
@@ -40,9 +41,9 @@ const Header = () => {
             <NavItem>
               <Button
                 className="primary-btn hover-button"
-                href="https://dev-brands.dogoodpoints.com/"
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={() =>
+                  (window.location.href = "https://brands.dogoodpoints.com/")
+                }
               >
                 For Business
               </Button>
@@ -59,9 +60,10 @@ const Header = () => {
             <NavItem className="mb-3">
               <Button
                 className="w-100 secondary-btn hover-button"
-                href="https://dev-nonprofits.dogoodpoints.com/"
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={() =>
+                  (window.location.href =
+                    "https://nonprofits.dogoodpoints.com/")
+                }
               >
                 For Nonprofits
               </Button>
@@ -69,9 +71,9 @@ const Header = () => {
             <NavItem>
               <Button
                 className="w-100 primary-btn hover-button"
-                href="https://dev-brands.dogoodpoints.com/"
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={() =>
+                  (window.location.href = "https://brands.dogoodpoints.com/")
+                }
               >
                 For Business
               </Button>

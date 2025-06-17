@@ -111,6 +111,7 @@ export default function ScrollJackerSection() {
       const timeout = setTimeout(() => {
         setUnlockScroll(true);
         setCompletedOnce(true);
+        setOverlayText(""); // Clear any remaining overlay text
         document.body.style.overflow = "";
       }, 2000);
       return () => clearTimeout(timeout);
@@ -135,21 +136,28 @@ export default function ScrollJackerSection() {
         setShowWoman(true);
         setShowDuo(true);
         setOverlayText("Imagine a space where strategy meets service...");
+        // Clear overlay text after animation
+        setTimeout(() => setOverlayText(""), 3000);
       } else if (!showPieChart && !showNotes) {
         setShowPieChart(true);
         setShowNotes(true);
         setOverlayText(
           "At the intersection of mission and market lies true collaboration."
         );
+        // Clear overlay text after animation
+        setTimeout(() => setOverlayText(""), 3000);
       } else if (!showVolunteer && !showIntersect) {
         setShowVolunteer(true);
         setShowIntersect(true);
         setOverlayText("This is where real change begins.");
+        // Clear overlay text after animation
+        setTimeout(() => setOverlayText(""), 3000);
       } else if (!showHandshake) {
         setShowHandshake(true);
         setOverlayText("");
       } else if (!showOverlay) {
         setShowOverlay(true);
+        setOverlayText(""); // Ensure overlay text is cleared
       }
 
       setTimeout(() => {
@@ -180,6 +188,7 @@ export default function ScrollJackerSection() {
       ref={sectionRef}
       style={{
         height: "100vh",
+        minHeight: "100vh",
         overflow: "hidden",
         position: "relative",
         color: "white",
@@ -193,13 +202,16 @@ export default function ScrollJackerSection() {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-            className="w-100"
+            className="w-100 h-100"
+            style={{
+              position: "relative",
+              backgroundImage: "url('/images/venbg.png')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              backgroundColor: "#1a1a1a", // Fallback color similar to the image
+            }}
           >
-            <img
-              src="/images/venbg.png"
-              alt="bg"
-              style={{ height: 900, width: "100%" }}
-            />
             <Row className={classes.detail}>
               <Col sm={5} className="text-center">
                 <motion.div
@@ -263,6 +275,9 @@ export default function ScrollJackerSection() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, ease: "easeOut" }}
+              style={{
+                minHeight: "100vh",
+              }}
             >
               {/* Yellow Circle */}
               <motion.div
@@ -538,10 +553,8 @@ export default function ScrollJackerSection() {
                             e.currentTarget.style.color = "#2C55F9";
                           }}
                           onClick={() => {
-                            window.open(
-                              "https://dev-brands.dogoodpoints.com/",
-                              "_blank"
-                            );
+                            window.location.href =
+                              "https://brands.dogoodpoints.com/";
                           }}
                         >
                           For Business
@@ -564,10 +577,8 @@ export default function ScrollJackerSection() {
                             e.currentTarget.style.color = "#FFBD01";
                           }}
                           onClick={() => {
-                            window.open(
-                              "https://dev-nonprofits.dogoodpoints.com/",
-                              "_blank"
-                            );
+                            window.location.href =
+                              "https://nonprofits.dogoodpoints.com/";
                           }}
                         >
                           For Nonprofits
