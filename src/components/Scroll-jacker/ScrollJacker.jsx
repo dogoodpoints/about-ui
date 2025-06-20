@@ -144,6 +144,30 @@ export default function ScrollJackerSection() {
     };
   }, []);
 
+  // Additional safety effect to prevent floating text
+  useEffect(() => {
+    if (showHandshake || showOverlay || unlockScroll) {
+      // Force clear overlay text when reaching final phases
+      setOverlayText("");
+      if (overlayTimeoutRef.current) {
+        clearTimeout(overlayTimeoutRef.current);
+        overlayTimeoutRef.current = null;
+      }
+    }
+  }, [showHandshake, showOverlay, unlockScroll]);
+
+  // Monitor overlay text and ensure it doesn't persist too long
+  useEffect(() => {
+    if (overlayText && (showHandshake || showOverlay)) {
+      // If text is showing during final phases, clear it immediately
+      setOverlayText("");
+      if (overlayTimeoutRef.current) {
+        clearTimeout(overlayTimeoutRef.current);
+        overlayTimeoutRef.current = null;
+      }
+    }
+  }, [overlayText, showHandshake, showOverlay]);
+
   // Handle scroll-lock steps
   useEffect(() => {
     const onWheel = (e) => {
@@ -203,6 +227,15 @@ export default function ScrollJackerSection() {
         // Clear any existing timeout
         if (overlayTimeoutRef.current) clearTimeout(overlayTimeoutRef.current);
       }
+
+      // Additional safety: Clear overlay text after each step
+      setTimeout(() => {
+        if (showHandshake || showOverlay) {
+          setOverlayText("");
+          if (overlayTimeoutRef.current)
+            clearTimeout(overlayTimeoutRef.current);
+        }
+      }, 100);
 
       setTimeout(() => {
         lockRef.current = false;
