@@ -38,6 +38,23 @@ export default function ScrollJackerSection() {
   const lockRef = useRef(false);
   const lastScrollY = useRef(window.scrollY);
   const lastDirection = useRef("down");
+  const overlayTimeoutRef = useRef(null);
+  const wheelCooldownRef = useRef(false);
+
+  // Normalize scroll delta for different input devices (Windows-friendly)
+  const normalizeWheelDelta = (deltaY) => {
+    // Handle different mouse wheel sensitivities and trackpads
+    const absDelta = Math.abs(deltaY);
+
+    // Trackpad (usually smaller values)
+    if (absDelta < 50) return absDelta > 10 ? 1 : 0;
+
+    // Mouse wheel (usually larger values)
+    if (absDelta < 200) return 1;
+
+    // High sensitivity mouse or fast scroll
+    return 1;
+  };
 
   // Watch scroll direction
   useEffect(() => {
@@ -112,19 +129,63 @@ export default function ScrollJackerSection() {
         setUnlockScroll(true);
         setCompletedOnce(true);
         setOverlayText(""); // Clear any remaining overlay text
+        // Clear overlay timeout
+        if (overlayTimeoutRef.current) clearTimeout(overlayTimeoutRef.current);
         document.body.style.overflow = "";
       }, 2000);
       return () => clearTimeout(timeout);
     }
   }, [showOverlay]);
 
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (overlayTimeoutRef.current) clearTimeout(overlayTimeoutRef.current);
+    };
+  }, []);
+
+  // Additional safety effect to prevent floating text
+  useEffect(() => {
+    if (showHandshake || showOverlay || unlockScroll) {
+      // Force clear overlay text when reaching final phases
+      setOverlayText("");
+      if (overlayTimeoutRef.current) {
+        clearTimeout(overlayTimeoutRef.current);
+        overlayTimeoutRef.current = null;
+      }
+    }
+  }, [showHandshake, showOverlay, unlockScroll]);
+
+  // Monitor overlay text and ensure it doesn't persist too long
+  useEffect(() => {
+    if (overlayText && (showHandshake || showOverlay)) {
+      // If text is showing during final phases, clear it immediately
+      setOverlayText("");
+      if (overlayTimeoutRef.current) {
+        clearTimeout(overlayTimeoutRef.current);
+        overlayTimeoutRef.current = null;
+      }
+    }
+  }, [overlayText, showHandshake, showOverlay]);
+
   // Handle scroll-lock steps
   useEffect(() => {
     const onWheel = (e) => {
-      if (!activeRef.current || lockRef.current || unlockScroll) return;
+      if (
+        !activeRef.current ||
+        lockRef.current ||
+        unlockScroll ||
+        wheelCooldownRef.current
+      )
+        return;
+
+      // Normalize wheel delta for Windows compatibility
+      const shouldProgress = normalizeWheelDelta(e.deltaY);
+      if (!shouldProgress) return;
 
       e.preventDefault();
       lockRef.current = true;
+      wheelCooldownRef.current = true;
 
       // Sequential animation progression
       if (index < steps.length - 1) {
@@ -136,38 +197,243 @@ export default function ScrollJackerSection() {
         setShowWoman(true);
         setShowDuo(true);
         setOverlayText("Imagine a space where strategy meets service...");
-        // Clear overlay text after animation
-        setTimeout(() => setOverlayText(""), 3000);
+        // Clear any existing timeout and set new one
+        if (overlayTimeoutRef.current) clearTimeout(overlayTimeoutRef.current);
+        overlayTimeoutRef.current = setTimeout(() => setOverlayText(""), 3000);
       } else if (!showPieChart && !showNotes) {
         setShowPieChart(true);
         setShowNotes(true);
         setOverlayText(
           "At the intersection of mission and market lies true collaboration."
         );
-        // Clear overlay text after animation
-        setTimeout(() => setOverlayText(""), 3000);
+        // Clear any existing timeout and set new one
+        if (overlayTimeoutRef.current) clearTimeout(overlayTimeoutRef.current);
+        overlayTimeoutRef.current = setTimeout(() => setOverlayText(""), 3000);
       } else if (!showVolunteer && !showIntersect) {
         setShowVolunteer(true);
         setShowIntersect(true);
         setOverlayText("This is where real change begins.");
-        // Clear overlay text after animation
-        setTimeout(() => setOverlayText(""), 3000);
+        // Clear any existing timeout and set new one
+        if (overlayTimeoutRef.current) clearTimeout(overlayTimeoutRef.current);
+        overlayTimeoutRef.current = setTimeout(() => setOverlayText(""), 3000);
       } else if (!showHandshake) {
         setShowHandshake(true);
         setOverlayText("");
+        // Clear any existing timeout
+        if (overlayTimeoutRef.current) clearTimeout(overlayTimeoutRef.current);
       } else if (!showOverlay) {
         setShowOverlay(true);
         setOverlayText(""); // Ensure overlay text is cleared
+        // Clear any existing timeout
+        if (overlayTimeoutRef.current) clearTimeout(overlayTimeoutRef.current);
       }
+
+      // Additional safety: Clear overlay text after each step
+      setTimeout(() => {
+        if (showHandshake || showOverlay) {
+          setOverlayText("");
+          if (overlayTimeoutRef.current)
+            clearTimeout(overlayTimeoutRef.current);
+        }
+      }, 100);
 
       setTimeout(() => {
         lockRef.current = false;
+        wheelCooldownRef.current = false;
       }, 1000);
     };
 
     document.addEventListener("wheel", onWheel, { passive: false });
     return () => {
       document.removeEventListener("wheel", onWheel);
+    };
+  }, [
+    index,
+    circleStage,
+    showWoman,
+    showDuo,
+    showPieChart,
+    showNotes,
+    showVolunteer,
+    showIntersect,
+    showHandshake,
+    showOverlay,
+    unlockScroll,
+  ]);
+
+  // Add keyboard navigation for Windows accessibility
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      if (!activeRef.current || lockRef.current || unlockScroll) return;
+
+      // Arrow Down, Space, or Page Down to progress
+      if (e.key === "ArrowDown" || e.key === " " || e.key === "PageDown") {
+        e.preventDefault();
+        lockRef.current = true;
+
+        // Same progression logic as wheel event
+        if (index < steps.length - 1) {
+          setIndex((i) => i + 1);
+        } else if (index === steps.length - 1 && circleStage === 0) {
+          setCircleStage(1);
+          setCircleTextsVisible(false);
+        } else if (!showWoman && !showDuo) {
+          setShowWoman(true);
+          setShowDuo(true);
+          setOverlayText("Imagine a space where strategy meets service...");
+          if (overlayTimeoutRef.current)
+            clearTimeout(overlayTimeoutRef.current);
+          overlayTimeoutRef.current = setTimeout(
+            () => setOverlayText(""),
+            3000
+          );
+        } else if (!showPieChart && !showNotes) {
+          setShowPieChart(true);
+          setShowNotes(true);
+          setOverlayText(
+            "At the intersection of mission and market lies true collaboration."
+          );
+          if (overlayTimeoutRef.current)
+            clearTimeout(overlayTimeoutRef.current);
+          overlayTimeoutRef.current = setTimeout(
+            () => setOverlayText(""),
+            3000
+          );
+        } else if (!showVolunteer && !showIntersect) {
+          setShowVolunteer(true);
+          setShowIntersect(true);
+          setOverlayText("This is where real change begins.");
+          if (overlayTimeoutRef.current)
+            clearTimeout(overlayTimeoutRef.current);
+          overlayTimeoutRef.current = setTimeout(
+            () => setOverlayText(""),
+            3000
+          );
+        } else if (!showHandshake) {
+          setShowHandshake(true);
+          setOverlayText("");
+          if (overlayTimeoutRef.current)
+            clearTimeout(overlayTimeoutRef.current);
+        } else if (!showOverlay) {
+          setShowOverlay(true);
+          setOverlayText("");
+          if (overlayTimeoutRef.current)
+            clearTimeout(overlayTimeoutRef.current);
+        }
+
+        setTimeout(() => {
+          lockRef.current = false;
+        }, 1000);
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [
+    index,
+    circleStage,
+    showWoman,
+    showDuo,
+    showPieChart,
+    showNotes,
+    showVolunteer,
+    showIntersect,
+    showHandshake,
+    showOverlay,
+    unlockScroll,
+  ]);
+
+  // Add touch support for Windows tablets
+  useEffect(() => {
+    let startY = 0;
+    let endY = 0;
+
+    const onTouchStart = (e) => {
+      if (!activeRef.current || lockRef.current || unlockScroll) return;
+      startY = e.touches[0].clientY;
+    };
+
+    const onTouchEnd = (e) => {
+      if (!activeRef.current || lockRef.current || unlockScroll) return;
+      endY = e.changedTouches[0].clientY;
+
+      // Detect upward swipe (scroll down equivalent)
+      if (startY > endY + 50) {
+        e.preventDefault();
+        lockRef.current = true;
+
+        // Same progression logic
+        if (index < steps.length - 1) {
+          setIndex((i) => i + 1);
+        } else if (index === steps.length - 1 && circleStage === 0) {
+          setCircleStage(1);
+          setCircleTextsVisible(false);
+        } else if (!showWoman && !showDuo) {
+          setShowWoman(true);
+          setShowDuo(true);
+          setOverlayText("Imagine a space where strategy meets service...");
+          if (overlayTimeoutRef.current)
+            clearTimeout(overlayTimeoutRef.current);
+          overlayTimeoutRef.current = setTimeout(
+            () => setOverlayText(""),
+            3000
+          );
+        } else if (!showPieChart && !showNotes) {
+          setShowPieChart(true);
+          setShowNotes(true);
+          setOverlayText(
+            "At the intersection of mission and market lies true collaboration."
+          );
+          if (overlayTimeoutRef.current)
+            clearTimeout(overlayTimeoutRef.current);
+          overlayTimeoutRef.current = setTimeout(
+            () => setOverlayText(""),
+            3000
+          );
+        } else if (!showVolunteer && !showIntersect) {
+          setShowVolunteer(true);
+          setShowIntersect(true);
+          setOverlayText("This is where real change begins.");
+          if (overlayTimeoutRef.current)
+            clearTimeout(overlayTimeoutRef.current);
+          overlayTimeoutRef.current = setTimeout(
+            () => setOverlayText(""),
+            3000
+          );
+        } else if (!showHandshake) {
+          setShowHandshake(true);
+          setOverlayText("");
+          if (overlayTimeoutRef.current)
+            clearTimeout(overlayTimeoutRef.current);
+        } else if (!showOverlay) {
+          setShowOverlay(true);
+          setOverlayText("");
+          if (overlayTimeoutRef.current)
+            clearTimeout(overlayTimeoutRef.current);
+        }
+
+        setTimeout(() => {
+          lockRef.current = false;
+        }, 1000);
+      }
+    };
+
+    if (sectionRef.current) {
+      sectionRef.current.addEventListener("touchstart", onTouchStart, {
+        passive: false,
+      });
+      sectionRef.current.addEventListener("touchend", onTouchEnd, {
+        passive: false,
+      });
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        sectionRef.current.removeEventListener("touchstart", onTouchStart);
+        sectionRef.current.removeEventListener("touchend", onTouchEnd);
+      }
     };
   }, [
     index,
