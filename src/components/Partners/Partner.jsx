@@ -8,11 +8,7 @@ function Partner() {
     <div className={classes.container}>
       <Container>
         <Row className="justify-content-center align-items-center">
-          <Col
-            md={12}
-            className="text-center px-4"
-            style={{ fontSize: "24px", fontWeight: "bold" }}
-          >
+          <Col md={12} className={`text-center px-4 ${classes.heading}`}>
             Our Partners
           </Col>
           <Col md={10} className="px-4">

@@ -66,10 +66,26 @@ export default function ScrollJackerSection() {
         lastDirection.current = "up";
       }
       lastScrollY.current = current;
+
+      // Clear overlay text if user scrolls significantly away from section
+      if (sectionRef.current && overlayText) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        const sectionTop = rect.top + window.scrollY;
+        const sectionBottom = sectionTop + rect.height;
+
+        // If scrolled past the section by more than 200px, clear the text
+        if (current > sectionBottom + 200 || current < sectionTop - 200) {
+          setOverlayText("");
+          if (overlayTimeoutRef.current) {
+            clearTimeout(overlayTimeoutRef.current);
+            overlayTimeoutRef.current = null;
+          }
+        }
+      }
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [overlayText]);
 
   // IntersectionObserver to handle lock logic
   useEffect(() => {
@@ -90,6 +106,15 @@ export default function ScrollJackerSection() {
           document.body.style.overflow = "hidden";
         } else {
           document.body.style.overflow = "";
+        }
+
+        // Clear overlay text when leaving the section
+        if (!entering) {
+          setOverlayText("");
+          if (overlayTimeoutRef.current) {
+            clearTimeout(overlayTimeoutRef.current);
+            overlayTimeoutRef.current = null;
+          }
         }
       },
       { threshold: 0.9 }
@@ -167,6 +192,37 @@ export default function ScrollJackerSection() {
       }
     }
   }, [overlayText, showHandshake, showOverlay]);
+
+  // Clear overlay text on page visibility change or window blur
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden || !document.hasFocus()) {
+        setOverlayText("");
+        if (overlayTimeoutRef.current) {
+          clearTimeout(overlayTimeoutRef.current);
+          overlayTimeoutRef.current = null;
+        }
+      }
+    };
+
+    const handleWindowBlur = () => {
+      setOverlayText("");
+      if (overlayTimeoutRef.current) {
+        clearTimeout(overlayTimeoutRef.current);
+        overlayTimeoutRef.current = null;
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("blur", handleWindowBlur);
+    window.addEventListener("focus", handleWindowBlur); // Clear on focus too for safety
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("blur", handleWindowBlur);
+      window.removeEventListener("focus", handleWindowBlur);
+    };
+  }, []);
 
   // Handle scroll-lock steps
   useEffect(() => {
@@ -452,14 +508,7 @@ export default function ScrollJackerSection() {
   return (
     <div
       ref={sectionRef}
-      style={{
-        height: "100vh",
-        minHeight: "100vh",
-        overflow: "hidden",
-        position: "relative",
-        color: "white",
-      }}
-      className="d-flex align-items-center justify-content-center"
+      className={`d-flex align-items-center justify-content-center section-container ${classes.scrollJackerContainer}`}
     >
       <AnimatePresence mode="wait">
         {circleStage === 0 ? (
@@ -468,14 +517,9 @@ export default function ScrollJackerSection() {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-            className="w-100 h-100"
+            className={`w-100 h-100 ${classes.initialBackground}`}
             style={{
-              position: "relative",
               backgroundImage: "url('/images/venbg.png')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              backgroundColor: "#1a1a1a", // Fallback color similar to the image
             }}
           >
             <Row className={classes.detail}>
@@ -486,8 +530,7 @@ export default function ScrollJackerSection() {
                   animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   exit={{ opacity: 0, y: -130, filter: "blur(8px)" }}
                   transition={{ duration: 1.5, ease: "easeOut" }}
-                  className="text-center display-4"
-                  style={{ fontWeight: "bold" }}
+                  className={`text-center display-4 ${classes.stepText}`}
                 >
                   {steps[index]}
                 </motion.div>
@@ -505,29 +548,9 @@ export default function ScrollJackerSection() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -50 }}
                   transition={{ duration: 1, ease: "easeOut" }}
-                  style={{
-                    position: "fixed",
-                    top: "20%",
-                    left: 0,
-                    right: 0,
-                    zIndex: 1000,
-                    textAlign: "center",
-                    pointerEvents: "none",
-                  }}
+                  className={classes.overlayContainer}
                 >
-                  <div
-                    style={{
-                      display: "inline-block",
-                      padding: "20px 40px",
-                      background: "transparent",
-                      borderRadius: "10px",
-                      color: "black",
-                      fontSize: "28px",
-                      fontWeight: "bold",
-                      maxWidth: "80%",
-                      margin: "0 auto",
-                    }}
-                  >
+                  <div className={classes.overlayTextContent}>
                     {overlayText}
                   </div>
                 </motion.div>
