@@ -19,6 +19,11 @@
     object-fit: contain;
 }
 
+.heading {
+    font-size: 24px;
+    font-weight: bold;
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 64px 0;

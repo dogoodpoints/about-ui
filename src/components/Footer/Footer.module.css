@@ -33,6 +33,23 @@
     gap: 1.5rem;
 }
 
+.footerColumn {
+    text-align: left;
+}
+
+.footerHeadingStyle {
+    text-align: left;
+    font-weight: bold;
+}
+
+.footerLinkStyle {
+    text-align: left;
+}
+
+.legalLink {
+    width: 60px;
+}
+
 .copyrightSection {
     display: flex;
     justify-content: space-between;
