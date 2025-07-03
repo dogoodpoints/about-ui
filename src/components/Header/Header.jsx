@@ -17,7 +17,7 @@ const Header = () => {
   const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <Navbar className="py-4">
+    <Navbar className={`py-4 ${classes.navbar}`} fixed="top">
       <Container>
         {/* Main header row */}
         <div className={classes.headerRow}>
@@ -45,7 +45,7 @@ const Header = () => {
                   (window.location.href = "https://brands.dogoodpoints.com/")
                 }
               >
-                For Business
+                For Brands
               </Button>
             </NavItem>
           </div>
@@ -75,7 +75,7 @@ const Header = () => {
                   (window.location.href = "https://brands.dogoodpoints.com/")
                 }
               >
-                For Business
+                For Brands
               </Button>
             </NavItem>
           </Nav>
