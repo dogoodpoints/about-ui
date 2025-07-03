@@ -105,6 +105,7 @@ export default function ScrollJackerSection() {
         ) {
           document.body.style.overflow = "hidden";
         } else {
+          // Always restore scroll when not in the specific condition
           document.body.style.overflow = "";
         }
 
@@ -115,6 +116,8 @@ export default function ScrollJackerSection() {
             clearTimeout(overlayTimeoutRef.current);
             overlayTimeoutRef.current = null;
           }
+          // Ensure scroll is restored when leaving the section
+          document.body.style.overflow = "";
         }
       },
       { threshold: 0.9 }
@@ -127,6 +130,13 @@ export default function ScrollJackerSection() {
       document.body.style.overflow = "";
     };
   }, [unlockScroll, completedOnce]);
+
+  // Additional cleanup effect to ensure scroll is always restored
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
 
   // Effect to manage overlay text based on animation step
   useEffect(() => {
@@ -846,7 +856,7 @@ export default function ScrollJackerSection() {
                               "https://brands.dogoodpoints.com/";
                           }}
                         >
-                          For Business
+                          For Brands
                         </Button>
                         <Button
                           size="lg"

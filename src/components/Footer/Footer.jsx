@@ -25,9 +25,7 @@ export default function Footer() {
             </div>
             <div
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
-              onClick={() =>
-                handleClick("https://www.dogoodpoints.com/about-dgp")
-              }
+              onClick={() => (window.location.href = "/")}
             >
               About
             </div>
@@ -74,14 +72,7 @@ export default function Footer() {
             <div className={`mb-3 ${classes.footerHeadingStyle}`}>
               Business/Services
             </div>
-            <div
-              className={`mb-2 hover-link ${classes.footerLinkStyle}`}
-              onClick={() =>
-                handleClick("https://www.dogoodpoints.com/services/b2b")
-              }
-            >
-              Services
-            </div>
+
             <div
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
               onClick={() =>
@@ -117,16 +108,6 @@ export default function Footer() {
               }
             >
               Data API
-            </div>
-            <div
-              className={`mb-2 hover-link ${classes.footerLinkStyle}`}
-              onClick={() =>
-                handleClick(
-                  "https://www.dogoodpoints.com/services/shop-merchindise"
-                )
-              }
-            >
-              Do Good Shop
             </div>
           </Col>
         </Row>

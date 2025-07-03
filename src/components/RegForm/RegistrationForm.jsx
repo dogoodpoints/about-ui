@@ -95,7 +95,7 @@ function RegistrationForm() {
             className="text-center px-2 px-sm-4 px-md-5"
           >
             <h3 className={classes.heading}>
-              Ready to get started? Let's do good together.
+              Let’s connect and build something together.
             </h3>
             <Form onSubmit={handleSubmit}>
               <Row className="flex-wrap mt-5 justify-content-center">
