@@ -12,7 +12,13 @@ export default function Footer() {
     <div className={classes.footer}>
       <Container>
         <Row>
-          <Col lg={2} md={3} xs={12} className="mb-4">
+          <Col
+            lg={2}
+            md={3}
+            xs={12}
+            className="mb-4"
+            style={{ textAlign: "start" }}
+          >
             <img
               src="/images/DGP.png"
               alt="Do good point"
@@ -27,7 +33,7 @@ export default function Footer() {
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
               onClick={() => (window.location.href = "/")}
             >
-              About
+              About Do Good
             </div>
             <div
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
@@ -46,7 +52,7 @@ export default function Footer() {
             >
               Do Good Points
             </div>
-            <div
+            {/* <div
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
               onClick={() => handleClick("https://www.dogoodpoints.com/funds")}
             >
@@ -65,7 +71,7 @@ export default function Footer() {
               onClick={() => handleClick("https://shop.dogoodpoints.com/")}
             >
               Do Good Shop
-            </div>
+            </div> */}
           </Col>
 
           <Col lg={4} md={3} xs={12} className={`mb-4 ${classes.footerColumn}`}>
