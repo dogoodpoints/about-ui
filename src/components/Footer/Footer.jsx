@@ -117,19 +117,11 @@ export default function Footer() {
             </div>
           </Col>
         </Row>
-        <Row className="justify-content-between mt-3">
-          <Col
-            sm={3}
-            xs={12}
-            className="text-sm-start text-center mb-sm-0 mb-3"
-          >
+        <Row className="justify-content-between mt-5">
+          <Col sm={3} xs={12} className="text-sm-start text-center mb-sm-0">
             Copyright © {new Date().getFullYear()} Do Good Points.
           </Col>
-          <Col
-            sm={4}
-            xs={12}
-            className="text-sm-start text-center mb-sm-0 mb-3"
-          >
+          <Col sm={4} xs={12} className="text-sm-start text-center mb-sm-0">
             <div className="d-flex align-items-center justify-content-center justify-content-sm-start">
               <span
                 className={`hover-link ${classes.legalLink}`}
