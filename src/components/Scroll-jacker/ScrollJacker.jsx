@@ -306,7 +306,7 @@ export default function ScrollJackerSection() {
       setTimeout(() => {
         lockRef.current = false;
         wheelCooldownRef.current = false;
-      }, 1000);
+      }, 500);
     };
 
     document.addEventListener("wheel", onWheel, { passive: false });
@@ -389,7 +389,7 @@ export default function ScrollJackerSection() {
 
         setTimeout(() => {
           lockRef.current = false;
-        }, 1000);
+        }, 500);
       }
     };
 
@@ -482,7 +482,7 @@ export default function ScrollJackerSection() {
 
         setTimeout(() => {
           lockRef.current = false;
-        }, 1000);
+        }, 500);
       }
     };
 
