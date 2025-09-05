@@ -25,16 +25,36 @@ export default function Footer() {
               className={classes.dgp}
             />
           </Col>
-          <Col lg={2} md={3} xs={6} className={`mb-4 ${classes.footerColumn}`}>
-            <div className={`mb-3 ${classes.footerHeadingStyle}`}>
-              Learn More
+          <Col lg={2} md={3} xs={12} className={`mb-4 ${classes.footerColumn}`}>
+            <div className={`mb-3 ${classes.footerHeadingStyle}`}>Company</div>
+            <div
+              className={`mb-2 hover-link ${classes.footerLinkStyle}`}
+              onClick={() => handleClick("https://about.dogoodpoints.com/")}
+            >
+              Home
             </div>
             <div
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
-              onClick={() => (window.location.href = "/")}
+              onClick={() =>
+                handleClick("https://www.dogoodpoints.com/about-dgp")
+              }
             >
-              About Do Good
+              About Us
             </div>
+            <div
+              className={`mb-2 hover-link ${classes.footerLinkStyle}`}
+              onClick={() =>
+                handleClick("https://www.dogoodpoints.com/blog-home")
+              }
+            >
+              Do Good News
+            </div>
+            {/* <div
+              className={`mb-2 hover-link ${classes.footerLinkStyle}`}
+              onClick={() => handleClick("https://ai.dogoodpoints.com/signin")}
+            >
+              DoGoodAi
+            </div> */}
             <div
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
               onClick={() =>
@@ -45,12 +65,49 @@ export default function Footer() {
             </div>
           </Col>
           <Col lg={2} md={3} xs={6} className={`mb-4 ${classes.footerColumn}`}>
-            <div className={`mb-3 ${classes.footerHeadingStyle}`}>Discover</div>
+            <div className={`mb-3 ${classes.footerHeadingStyle}`}>Services</div>
+            <div
+              className={`mb-2 hover-link ${classes.footerLinkStyle}`}
+              onClick={() => handleClick("https://brands.dogoodpoints.com")}
+            >
+              NaaS
+            </div>
+            <div
+              className={`mb-2 hover-link ${classes.footerLinkStyle}`}
+              onClick={() => handleClick("https://nonprofits.dogoodpoints.com")}
+            >
+              For Nonprofits
+            </div>
+          </Col>
+          <Col lg={2} md={3} xs={6} className={`mb-4 ${classes.footerColumn}`}>
+            <div className={`mb-3 ${classes.footerHeadingStyle}`}>
+              Do Good Points
+            </div>
             <div
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
               onClick={() => handleClick("https://www.dogoodpoints.com")}
             >
-              Do Good Points
+              About Do Good Points
+            </div>
+            <div
+              className={`mb-2 hover-link ${classes.footerLinkStyle}`}
+              onClick={() =>
+                handleClick("https://www.dogoodpoints.com/how-it-works")
+              }
+            >
+              How it Works
+            </div>
+            <div
+              className={`mb-2 hover-link ${classes.footerLinkStyle}`}
+              onClick={() => handleClick("https://www.dogoodpoints.com/funds")}
+            >
+              Do Good Funds
+            </div>
+            <div
+              className={`mb-2 hover-link ${classes.footerLinkStyle}`}
+              onClick={() => handleClick("https://www.dogoodpoints.com/rog")}
+            >
+              ROG
             </div>
             {/* <div
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
@@ -72,49 +129,6 @@ export default function Footer() {
             >
               Do Good Shop
             </div> */}
-          </Col>
-
-          <Col lg={4} md={3} xs={12} className={`mb-4 ${classes.footerColumn}`}>
-            <div className={`mb-3 ${classes.footerHeadingStyle}`}>
-              Business/Services
-            </div>
-
-            <div
-              className={`mb-2 hover-link ${classes.footerLinkStyle}`}
-              onClick={() =>
-                handleClick(
-                  "https://www.dogoodpoints.com/services/google-ad-grants"
-                )
-              }
-            >
-              Google Ad Grants
-            </div>
-            <div
-              className={`mb-2 hover-link ${classes.footerLinkStyle}`}
-              onClick={() =>
-                handleClick(
-                  "https://www.dogoodpoints.com/services/fiscal-sponsorship"
-                )
-              }
-            >
-              Fiscal Sponsorship
-            </div>
-            <div
-              className={`mb-2 hover-link ${classes.footerLinkStyle}`}
-              onClick={() => handleClick("https://ai.dogoodpoints.com/signin")}
-            >
-              DoGoodAi
-            </div>
-            <div
-              className={`mb-2 hover-link ${classes.footerLinkStyle}`}
-              onClick={() =>
-                handleClick(
-                  "https://www.dogoodpoints.com/services/nonprofit-data-api"
-                )
-              }
-            >
-              Data API
-            </div>
           </Col>
         </Row>
         <Row className="justify-content-between mt-5">

@@ -250,6 +250,7 @@ export default function ScrollJackerSection() {
       if (!shouldProgress) return;
 
       e.preventDefault();
+      e.stopPropagation(); // Additional prevention for iOS
       lockRef.current = true;
       wheelCooldownRef.current = true;
 
@@ -411,22 +412,31 @@ export default function ScrollJackerSection() {
     unlockScroll,
   ]);
 
-  // Add touch support for Windows tablets
+  // Add touch support for iOS and mobile devices
   useEffect(() => {
     let startY = 0;
     let endY = 0;
+    let touchStartTime = 0;
 
     const onTouchStart = (e) => {
       if (!activeRef.current || lockRef.current || unlockScroll) return;
       startY = e.touches[0].clientY;
+      touchStartTime = Date.now();
+      e.preventDefault(); // Prevent default touch behavior on iOS
+    };
+
+    const onTouchMove = (e) => {
+      if (!activeRef.current || lockRef.current || unlockScroll) return;
+      e.preventDefault(); // Prevent scrolling on iOS
     };
 
     const onTouchEnd = (e) => {
       if (!activeRef.current || lockRef.current || unlockScroll) return;
       endY = e.changedTouches[0].clientY;
+      const touchDuration = Date.now() - touchStartTime;
 
-      // Detect upward swipe (scroll down equivalent)
-      if (startY > endY + 50) {
+      // Detect upward swipe (scroll down equivalent) with minimum distance and reasonable duration
+      if (startY > endY + 30 && touchDuration < 1000) {
         e.preventDefault();
         lockRef.current = true;
 
@@ -490,6 +500,9 @@ export default function ScrollJackerSection() {
       sectionRef.current.addEventListener("touchstart", onTouchStart, {
         passive: false,
       });
+      sectionRef.current.addEventListener("touchmove", onTouchMove, {
+        passive: false,
+      });
       sectionRef.current.addEventListener("touchend", onTouchEnd, {
         passive: false,
       });
@@ -498,6 +511,7 @@ export default function ScrollJackerSection() {
     return () => {
       if (sectionRef.current) {
         sectionRef.current.removeEventListener("touchstart", onTouchStart);
+        sectionRef.current.removeEventListener("touchmove", onTouchMove);
         sectionRef.current.removeEventListener("touchend", onTouchEnd);
       }
     };

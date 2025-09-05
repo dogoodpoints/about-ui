@@ -17,6 +17,10 @@
     overflow: hidden;
     position: relative;
     color: white;
+    /* iOS scroll prevention */
+    -webkit-overflow-scrolling: touch;
+    touch-action: none;
+    overscroll-behavior: none;
 }
 
 .initialBackground {
