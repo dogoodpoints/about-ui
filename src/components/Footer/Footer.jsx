@@ -8,6 +8,10 @@ export default function Footer() {
     window.open(link, "_blank");
   };
 
+  const openContactWindow = () => {
+    window.location.href = "/contact";
+  };
+
   return (
     <div className={classes.footer}>
       <Container>
@@ -57,9 +61,7 @@ export default function Footer() {
             </div> */}
             <div
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
-              onClick={() =>
-                handleClick("https://www.dogoodpoints.com/contact")
-              }
+              onClick={openContactWindow}
             >
               Contact Us
             </div>
