@@ -250,6 +250,7 @@ export default function ScrollJackerSection() {
       if (!shouldProgress) return;
 
       e.preventDefault();
+      e.stopPropagation(); // Additional prevention for iOS
       lockRef.current = true;
       wheelCooldownRef.current = true;
 
@@ -411,22 +412,31 @@ export default function ScrollJackerSection() {
     unlockScroll,
   ]);
 
-  // Add touch support for Windows tablets
+  // Add touch support for iOS and mobile devices
   useEffect(() => {
     let startY = 0;
     let endY = 0;
+    let touchStartTime = 0;
 
     const onTouchStart = (e) => {
       if (!activeRef.current || lockRef.current || unlockScroll) return;
       startY = e.touches[0].clientY;
+      touchStartTime = Date.now();
+      e.preventDefault(); // Prevent default touch behavior on iOS
+    };
+
+    const onTouchMove = (e) => {
+      if (!activeRef.current || lockRef.current || unlockScroll) return;
+      e.preventDefault(); // Prevent scrolling on iOS
     };
 
     const onTouchEnd = (e) => {
       if (!activeRef.current || lockRef.current || unlockScroll) return;
       endY = e.changedTouches[0].clientY;
+      const touchDuration = Date.now() - touchStartTime;
 
-      // Detect upward swipe (scroll down equivalent)
-      if (startY > endY + 50) {
+      // Detect upward swipe (scroll down equivalent) with minimum distance and reasonable duration
+      if (startY > endY + 30 && touchDuration < 1000) {
         e.preventDefault();
         lockRef.current = true;
 
@@ -490,6 +500,9 @@ export default function ScrollJackerSection() {
       sectionRef.current.addEventListener("touchstart", onTouchStart, {
         passive: false,
       });
+      sectionRef.current.addEventListener("touchmove", onTouchMove, {
+        passive: false,
+      });
       sectionRef.current.addEventListener("touchend", onTouchEnd, {
         passive: false,
       });
@@ -498,6 +511,7 @@ export default function ScrollJackerSection() {
     return () => {
       if (sectionRef.current) {
         sectionRef.current.removeEventListener("touchstart", onTouchStart);
+        sectionRef.current.removeEventListener("touchmove", onTouchMove);
         sectionRef.current.removeEventListener("touchend", onTouchEnd);
       }
     };
@@ -570,45 +584,29 @@ export default function ScrollJackerSection() {
             {/* Main Content */}
             <motion.div
               key="circles"
-              className="position-absolute w-100 h-100 d-flex justify-content-center align-items-center"
+              className={`position-absolute w-100 h-100 d-flex justify-content-center align-items-center ${classes.circlesContainer}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, ease: "easeOut" }}
-              style={{
-                minHeight: "100vh",
-              }}
             >
               {/* Yellow Circle */}
               <motion.div
-                className="position-absolute rounded-circle"
+                className={`position-absolute rounded-circle ${classes.yellowCircle} ${classes.circleContainer}`}
                 initial={{ x: "100vw" }}
                 animate={{ x: 0 }}
                 transition={{ duration: 2, ease: "easeOut" }}
-                style={{
-                  right: "22%",
-                  top: "30%",
-                  transform: "translateY(-50%)",
-                  border: "3px dotted #000",
-                  padding: "30px",
-                }}
               >
                 <img
                   src="/images/yellow_circle.png"
                   alt="bg"
-                  style={{ height: 500, width: "auto", opacity: 0.8 }}
+                  className={classes.circleImage}
                 />
                 {circleTextsVisible && (
                   <motion.div
                     initial={{ opacity: 1 }}
                     animate={{ opacity: 0 }}
                     transition={{ duration: 1 }}
-                    style={{
-                      position: "absolute",
-                      top: "80%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                      fontSize: "24px",
-                    }}
+                    className={classes.circleText}
                   >
                     Nonprofit
                   </motion.div>
@@ -623,47 +621,37 @@ export default function ScrollJackerSection() {
                     <img
                       src="/images/woman.png"
                       alt="woman"
-                      style={{
-                        position: "absolute",
-                        top: "46%",
-                        right: "-9%",
-                        height: 450,
-                        width: "auto",
-                        zIndex: 9,
-                        transform: "translate(-30%, -37%)",
-                      }}
+                      className={classes.womanImage}
                     />
                   </motion.div>
                 )}
 
                 {showPieChart && (
                   <motion.div
-                    className="position-absolute"
+                    className={`position-absolute ${classes.pieChartContainer}`}
                     initial={{ x: "100vw" }}
                     animate={{ x: 300 }}
                     transition={{ duration: 1, ease: "easeOut" }}
-                    style={{ top: -22 }}
                   >
                     <img
                       src="/images/piechart.png"
                       alt="pie"
-                      style={{ height: 150, width: "auto", opacity: 0.8 }}
+                      className={classes.pieChartImage}
                     />
                   </motion.div>
                 )}
 
                 {showNotes && (
                   <motion.div
-                    className="position-absolute"
+                    className={`position-absolute ${classes.notesContainer}`}
                     initial={{ x: "100vw" }}
                     animate={{ x: 450 }}
                     transition={{ duration: 1, ease: "easeOut" }}
-                    style={{ top: 100 }}
                   >
                     <img
                       src="/images/notes.png"
                       alt="notes"
-                      style={{ height: 260, width: "auto" }}
+                      className={classes.notesImage}
                     />
                   </motion.div>
                 )}
@@ -671,36 +659,22 @@ export default function ScrollJackerSection() {
 
               {/* Blue Circle */}
               <motion.div
-                className="position-absolute rounded-circle"
+                className={`position-absolute rounded-circle ${classes.blueCircle} ${classes.circleContainer}`}
                 initial={{ x: "-100vw" }}
                 animate={{ x: 0 }}
                 transition={{ duration: 2, ease: "easeOut" }}
-                style={{
-                  left: "22.2%",
-                  top: "30%",
-                  transform: "translateY(-50%)",
-                  border: "3px dotted #000",
-                  padding: "30px",
-                }}
               >
                 <img
                   src="/images/blue_circle.png"
                   alt="bg"
-                  style={{ height: 500, width: "auto", opacity: 0.8 }}
+                  className={classes.circleImage}
                 />
                 {circleTextsVisible && (
                   <motion.div
                     initial={{ opacity: 1 }}
                     animate={{ opacity: 0 }}
                     transition={{ duration: 1 }}
-                    style={{
-                      position: "absolute",
-                      top: "80%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                      fontSize: "24px",
-                      zIndex: 9,
-                    }}
+                    className={classes.circleText}
                   >
                     Business
                   </motion.div>
@@ -715,15 +689,7 @@ export default function ScrollJackerSection() {
                     <img
                       src="/images/duo.png"
                       alt="duo"
-                      style={{
-                        position: "absolute",
-                        top: "59.5%",
-                        left: "39%",
-                        height: 400,
-                        width: "auto",
-                        zIndex: 9,
-                        transform: "translate(-50%, -50%)",
-                      }}
+                      className={classes.duoImage}
                     />
                   </motion.div>
                 )}
@@ -734,22 +700,12 @@ export default function ScrollJackerSection() {
                   initial={{ x: "-100vw" }}
                   animate={{ x: 0 }}
                   transition={{ duration: 1, ease: "easeOut" }}
-                  style={{
-                    position: "absolute",
-                    top: "20%",
-                    left: "17%",
-                    height: 450,
-                    width: "auto",
-                    zIndex: 9,
-                  }}
+                  className={classes.volunteerContainer}
                 >
                   <img
                     src="/images/volunteer.png"
                     alt="volunteer"
-                    style={{
-                      width: "auto",
-                      height: "100%",
-                    }}
+                    className={classes.volunteerImage}
                   />
                 </motion.div>
               )}
@@ -759,7 +715,7 @@ export default function ScrollJackerSection() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 1, ease: "easeOut" }}
-                  style={{ position: "absolute", top: "38%" }}
+                  className={classes.intersectContainer}
                 >
                   <img src="/images/intersect_one.png" alt="intersect" />
                 </motion.div>
@@ -770,7 +726,7 @@ export default function ScrollJackerSection() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 1, ease: "easeOut" }}
-                  style={{ position: "absolute", top: "38%" }}
+                  className={classes.handshakeContainer}
                 >
                   <img src="/images/handshake.png" alt="handshake" />
                 </motion.div>

@@ -17,6 +17,10 @@
     overflow: hidden;
     position: relative;
     color: white;
+    /* iOS scroll prevention */
+    -webkit-overflow-scrolling: touch;
+    touch-action: none;
+    overscroll-behavior: none;
 }
 
 .initialBackground {
@@ -190,4 +194,165 @@
 .nonprofitButton:hover {
     background-color: #FFBD01 !important;
     color: black !important;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+    .detail {
+        font-size: 32px;
+    }
+
+    .overlayTextContent {
+        font-size: 20px;
+        padding: 15px 25px;
+        max-width: 90%;
+    }
+
+    .circleImage {
+        height: 300px;
+    }
+
+    .womanImage {
+        height: 280px;
+        right: 15%;
+        transform: translate(-30%, -37%);
+    }
+
+    .duoImage {
+        height: 250px;
+        left: 35%;
+        transform: translate(-50%, -50%);
+    }
+
+    .pieChartImage {
+        height: 100px;
+    }
+
+    .notesImage {
+        height: 180px;
+    }
+
+    .volunteerContainer {
+        height: 300px;
+        left: 10%;
+    }
+
+    .circleText {
+        font-size: 18px;
+    }
+
+    .overlayHeading {
+        font-size: 20px;
+        margin-bottom: 40px;
+    }
+
+    .intersectContainer {
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        z-index: 10 !important;
+      ;
+    }
+
+    .intersectContainer img {
+        height: 200px;
+        width: auto;
+    }
+
+    .handshakeContainer img {
+        height: 200px;
+        width: auto;
+    }
+
+    /* Mobile circle overlap adjustments */
+    .yellowCircle {
+        left: 35% !important;
+        right: auto !important;
+    }
+
+    .blueCircle {
+        right: 35% !important;
+        left: auto !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .detail {
+        font-size: 24px;
+    }
+
+    .overlayTextContent {
+        font-size: 16px;
+        padding: 12px 20px;
+        max-width: 95%;
+    }
+
+    .circleImage {
+        height: 200px;
+    }
+
+    .womanImage {
+        height: 200px;
+        right: 5%;
+        transform: translate(-20%, -30%);
+    }
+
+    .duoImage {
+        height: 180px;
+        left: 30%;
+        transform: translate(-40%, -45%);
+    }
+
+    .pieChartImage {
+        height: 80px;
+    }
+
+    .notesImage {
+        height: 140px;
+    }
+
+    .volunteerContainer {
+        height: 220px;
+        left: 5%;
+    }
+
+    .circleText {
+        font-size: 14px;
+    }
+
+    .overlayHeading {
+        font-size: 18px;
+        margin-bottom: 30px;
+    }
+
+    .intersectContainer {
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        z-index: 10 !important;
+        top: 37%
+    }
+
+    .intersectContainer img {
+        height: 140px;
+        width: auto;
+    }
+
+    .handshakeContainer img {
+        height: 180px;
+        width: auto;
+    }
+
+    .handshakeContainer {
+        z-index: 99 !important;
+        top: 36%
+    }
+    /* Mobile circle overlap adjustments */
+    .yellowCircle {
+        left: 35% !important;
+        right: auto !important;
+    }
+
+    .blueCircle {
+        right: 35% !important;
+        left: auto !important;
+    }
 }
