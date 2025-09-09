@@ -187,7 +187,7 @@ function RegistrationForm() {
                 <Col sm="11">
                   <FormGroup
                     tag="fieldset"
-                    className="d-flex align-items-center"
+                    className="d-flex align-items-center font-size-10"
                   >
                     <div className="me-4" style={{ minWidth: "120px" }}>
                       Organization Type
@@ -241,6 +241,7 @@ function RegistrationForm() {
                       onChange={handleChange}
                       required
                       disabled={isLoading}
+                      style={{ minHeight: 150 }}
                     />
                     <label
                       className={formData.message ? "filled" : ""}
