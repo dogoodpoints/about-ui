@@ -37,22 +37,22 @@ export default function Footer() {
             >
               Home
             </div>
-            <div
+            {/* <div
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
               onClick={() =>
                 handleClick("https://www.dogoodpoints.com/about-dgp")
               }
             >
               About Us
-            </div>
-            <div
+            </div> */}
+            {/* <div
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
               onClick={() =>
                 handleClick("https://www.dogoodpoints.com/blog-home")
               }
             >
               Do Good News
-            </div>
+            </div> */}
             {/* <div
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
               onClick={() => handleClick("https://ai.dogoodpoints.com/signin")}
@@ -72,7 +72,7 @@ export default function Footer() {
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
               onClick={() => handleClick("https://brands.dogoodpoints.com")}
             >
-              NaaS
+              For Brands
             </div>
             <div
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
