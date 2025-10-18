@@ -9,36 +9,29 @@ function Partner() {
       <Container>
         <Row className="justify-content-center align-items-center">
           <Col md={12} className={`text-center px-4 ${classes.heading}`}>
-            Our Partners
+            Partners
           </Col>
           <Col md={10} className="px-4">
             <TextFadeIn>
               <Row className="mt-5 justify-content-center">
                 <Col xs={6} sm={3} className="text-center mb-4">
                   <img
-                    src="/images/streamlabs.png"
+                    src="/images/uncharitable.png"
                     alt="streamlabs"
-                    className={classes.partnerImage}
+                    className={classes.empathyImage}
                   />
                 </Col>
                 <Col xs={6} sm={3} className="text-center mb-4">
                   <img
-                    src="/images/playerTwo.png"
+                    src="/images/empathy.png"
                     alt="playerTwo"
-                    className={classes.partnerImage}
+                    className={classes.empathyImage}
                   />
                 </Col>
                 <Col xs={6} sm={3} className="text-center mb-4">
                   <img
-                    src="/images/Twitch.png"
+                    src="/images/sca.png"
                     alt="twitch"
-                    className={classes.partnerImage}
-                  />
-                </Col>
-                <Col xs={6} sm={3} className="text-center mb-4">
-                  <img
-                    src="/images/benLogo.png"
-                    alt="benLogo"
                     className={classes.partnerImage}
                   />
                 </Col>

@@ -6,7 +6,7 @@
   margin: 0 auto;
   position: relative;
   overflow-x: hidden;
-  padding-top: 100px; /* Add padding to account for fixed header */
+/* Add padding to account for fixed header */
 }
 
 .section-container {

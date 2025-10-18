@@ -6,17 +6,19 @@ import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import Partner from "./components/Partners/Partner";
 import RegistrationForm from "./components/RegForm/RegistrationForm";
-import ScrollJacker from "./components/Scroll-jacker/ScrollJacker";
 import Suncountry from "./components/Suncountry/Suncountry";
+import Impact from "./components/impact/Impact";
+import Faq from "./components/FAQ/faq";
+import Values from "./components/Values/Values";
 
 function App() {
   const Home = () => (
     <>
       <Header />
       <Description />
-      <ScrollJacker />
       <Partner />
-      <Suncountry />
+      <Impact />
+      <Values />
       <RegistrationForm />
       <Footer />
     </>

@@ -21,7 +21,7 @@ function RegistrationForm() {
     email: "",
     subject: "",
     message: "",
-    orgType: "",
+    orgType: "non-profit",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -94,9 +94,12 @@ function RegistrationForm() {
             sm="12"
             className="text-center px-2 px-sm-4 px-md-5"
           >
-            <h3 className={classes.heading}>
-              Let’s connect and build something together.
-            </h3>
+            <h3 className={classes.heading}>Get Started Today!</h3>
+            <p className={classes.desc}>
+              {" "}
+              Let's talk about how NaaS can transform your brand into a
+              purpose-driven powerhouse.
+            </p>
             <Form onSubmit={handleSubmit}>
               <Row className="flex-wrap mt-5 justify-content-center">
                 {/* First Name */}
@@ -274,6 +277,26 @@ function RegistrationForm() {
                 </Col>
               </Row>
             </Form>
+            <div style={{ marginTop: "42px", color: "#fff", fontSize: 24 }}>
+              <Row>
+                <Col>Or</Col>
+              </Row>
+              <Row>
+                <Col className="mt-4">
+                  Prefer email? Write us at{" "}
+                  <a
+                    href="mailto:partners@dogoodpoints.com"
+                    style={{
+                      color: "#fff",
+                      fontWeight: "bold",
+                      textDecoration: "none",
+                    }}
+                  >
+                    partners@dogoodpoints.com
+                  </a>
+                </Col>
+              </Row>
+            </div>
 
             {/* Success Message */}
             <AnimatePresence>
