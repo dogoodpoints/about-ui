@@ -68,7 +68,7 @@ function Impact() {
         </div>
       </div>
       <p className={classes.faqLine}>
-        Have questions? See our <a className={classes.faqLink} href="#faq">FAQ</a>
+        Have questions? See our <a className={classes.faqLink} href="https://dev-brands.dogoodpoints.com/#faq" target="_blank" rel="noopener noreferrer">FAQ</a>
       </p>
 
       <div className={classes.pricingWrap}>
