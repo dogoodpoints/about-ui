@@ -35,10 +35,13 @@
     .container {
         padding: 64px 0;
     }
+
+    .imageContainer {
+        flex-direction: column !important;
+    }
     
     .partnerImage {
-        height: 25px;
-        max-width: 140px;
+        height: 30px;
     }
 }
 
@@ -48,7 +51,6 @@
     }
     
     .partnerImage {
-        height: 20px;
-        max-width: 120px;
+        height: 30px;
     }
 }

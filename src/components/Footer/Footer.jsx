@@ -66,7 +66,7 @@ export default function Footer() {
               Contact Us
             </div>
           </Col>
-          <Col lg={2} md={3} xs={6} className={`mb-4 ${classes.footerColumn}`}>
+          <Col lg={2} md={3} xs={12} className={`mb-4 ${classes.footerColumn}`}>
             <div className={`mb-3 ${classes.footerHeadingStyle}`}>Services</div>
             <div
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}

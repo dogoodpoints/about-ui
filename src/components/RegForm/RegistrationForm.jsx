@@ -282,7 +282,7 @@ function RegistrationForm() {
                 <Col>Or</Col>
               </Row>
               <Row>
-                <Col className="mt-4">
+                <Col className={`${classes.email} mt-4`}>
                   Prefer email? Write us at{" "}
                   <a
                     href="mailto:partners@dogoodpoints.com"

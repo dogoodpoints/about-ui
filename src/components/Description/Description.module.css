@@ -34,6 +34,11 @@
     .description {
         font-size: 20px;
         padding: 64px 0;
+        height: 600px;
+    }
+    .descriptionTitle {
+        font-size: 32px !important;
+        width: auto !important;
     }
 }
 
@@ -51,7 +56,7 @@
 
 @media (max-width: 768px) {
     .descriptionText {
-        font-size: 16px;
+        font-size: 20px;
     }
 }
 

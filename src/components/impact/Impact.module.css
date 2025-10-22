@@ -230,10 +230,16 @@
         grid-template-columns: 1fr;
     }
     .heading {
-        font-size: 36px;
+        font-size: 24px !important;
+    }
+    .subheading {
+        font-size: 20px !important;
     }
     .featureIcon {
         width: 24px !important;
         height: 24px !important;
+    }
+    .card {
+        margin: 0px 20px;
     }
 }
