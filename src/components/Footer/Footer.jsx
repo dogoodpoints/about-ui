@@ -133,7 +133,7 @@ export default function Footer() {
             </div> */}
           </Col>
         </Row>
-        <Row className="justify-content-between mt-5">
+        <Row className="justify-content-between mt-5 align-items-end">
           <Col sm={3} xs={12} className="text-sm-start text-center mb-sm-0">
             Copyright © {new Date().getFullYear()} Do Good Points.
           </Col>
