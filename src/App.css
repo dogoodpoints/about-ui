@@ -19,7 +19,6 @@
 /* Add subtle borders for very large screens */
 @media (min-width: 1701px) {
   .app-container {
-    height: 500px;
   }
   .App {
     text-align: center;
