@@ -69,7 +69,7 @@ const Header = () => {
                   <Button
                     className={`${classes.primaryBtn} hover-button`}
                     onClick={() => {
-                      window.location.href = "https://brands.dogoodpoints.com/";
+                      window.location.href = "https://naas.dogoodpoints.com/";
                     }}
                   >
                     NaaS
