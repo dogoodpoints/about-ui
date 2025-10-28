@@ -15,14 +15,17 @@ import classes from "./Header.module.css";
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const openContactWindow = () => {
+    window.location.href = "/contact";
+  };
   return (
     <Navbar expand="md">
       <Container className={classes.headerContainer}>
         <NavbarBrand
-          href="https://about.dogoodpoints.com/"
+          href="https://home.dogoodpoints.com/"
           onClick={(e) => {
             e.preventDefault();
-            window.location.href = "https://about.dogoodpoints.com/";
+            window.location.href = "https://home.dogoodpoints.com/";
           }}
         >
           <img src="/images/logo.png" alt="Logo" className={classes.logo} />
@@ -46,8 +49,7 @@ const Header = () => {
                   <Button
                     className={`btn btn-link ${classes.linkBtn}`}
                     onClick={() => {
-                      window.location.href =
-                        "https://www.dogoodpoints.com/about-dgp";
+                      window.location.href = "https://about.dogoodpoints.com/";
                     }}
                   >
                     About Us
@@ -56,10 +58,7 @@ const Header = () => {
                 <NavItem>
                   <Button
                     className={`btn-link ${classes.linkBtn}`}
-                    onClick={() => {
-                      window.location.href =
-                        "https://www.dogoodpoints.com/contact";
-                    }}
+                    onClick={openContactWindow}
                   >
                     Contact Us
                   </Button>
