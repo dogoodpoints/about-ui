@@ -1,15 +1,35 @@
 .heading {
-    font-size: 24px;
+    font-size: 48px;
     font-weight: bold;
     text-align: center;
+    color: white;
+    }
+    
+    .desc {
+        color: white;
+        font-size: 24px;
+        margin-top: 24px;
+        margin-bottom: 8px;
 }
 .wrapper {
     padding: 96px 0;
     justify-content: center;
     align-items: center;
-    background-color: #f7f7fc;
+    background-color: #00c6c0;
     overflow-x: hidden;
     max-width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .heading {
+        font-size: 24px !important;
+    }
+    .desc {
+        font-size: 20px !important;
+    }
+    .email {
+        font-size: 20px !important;
+    }
 }
 
 

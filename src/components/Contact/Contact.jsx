@@ -64,8 +64,7 @@ export default function Contact() {
   }, []);
 
   return (
-    <div style={{ maxWidth: 720, margin: "0 auto", padding: 24 }}>
-
+    <div style={{}}>
       <div ref={containerRef} id="hs-form-root" />
     </div>
   );
