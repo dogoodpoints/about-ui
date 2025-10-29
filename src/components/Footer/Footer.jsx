@@ -33,15 +33,13 @@ export default function Footer() {
             <div className={`mb-3 ${classes.footerHeadingStyle}`}>Company</div>
             <div
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
-              onClick={() => handleClick("https://about.dogoodpoints.com/")}
+              onClick={() => handleClick("https://home.dogoodpoints.com/")}
             >
               Home
             </div>
             {/* <div
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
-              onClick={() =>
-                handleClick("https://www.dogoodpoints.com/about-dgp")
-              }
+              onClick={() => handleClick("https://about.dogoodpoints.com")}
             >
               About Us
             </div> */}
@@ -66,7 +64,7 @@ export default function Footer() {
               Contact Us
             </div>
           </Col>
-          <Col lg={2} md={3} xs={6} className={`mb-4 ${classes.footerColumn}`}>
+          <Col lg={2} md={3} xs={12} className={`mb-4 ${classes.footerColumn}`}>
             <div className={`mb-3 ${classes.footerHeadingStyle}`}>Services</div>
             <div
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
@@ -87,7 +85,9 @@ export default function Footer() {
             </div>
             <div
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
-              onClick={() => handleClick("https://www.dogoodpoints.com")}
+              onClick={() =>
+                handleClick("https://www.dogoodpoints.com/about-dgp")
+              }
             >
               About Do Good Points
             </div>
@@ -133,7 +133,7 @@ export default function Footer() {
             </div> */}
           </Col>
         </Row>
-        <Row className="justify-content-between mt-5">
+        <Row className="justify-content-between mt-5 align-items-end">
           <Col sm={3} xs={12} className="text-sm-start text-center mb-sm-0">
             Copyright © {new Date().getFullYear()} Do Good Points.
           </Col>

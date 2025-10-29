@@ -89,3 +89,10 @@ code {
     font-size: 13px !important;
   }
 }
+
+
+.hbspt-form {
+  max-width: 1700px;
+  margin: auto;
+ 
+}

@@ -3,17 +3,18 @@
 
 .app-container {
   max-width: 1700px;
+  padding: 0 20px;
   margin: 0 auto;
   position: relative;
   overflow-x: hidden;
-  padding-top: 100px; /* Add padding to account for fixed header */
+/* Add padding to account for fixed header */
 }
 
-.section-container {
+/* .section-container {
   max-width: 1700px;
   margin: 0 auto;
   width: 100%;
-}
+} */
 
 /* Add subtle borders for very large screens */
 @media (min-width: 1701px) {
@@ -21,6 +22,12 @@
   }
   .App {
     text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    padding: 0;
   }
 }
 

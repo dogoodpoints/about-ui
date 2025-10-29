@@ -5,79 +5,89 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  Button,
   Container,
-  Collapse,
+  Button,
   NavbarToggler,
+  Collapse,
 } from "reactstrap";
 import classes from "./Header.module.css";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const toggle = () => setIsOpen(!isOpen);
 
+  const openContactWindow = () => {
+    window.location.href = "/contact";
+  };
   return (
-    <Navbar className={`py-4 ${classes.navbar}`} fixed="top">
-      <Container>
-        {/* Main header row */}
-        <div className={classes.headerRow}>
-          <NavbarBrand href="/">
-            <img src="/images/logo.png" alt="Logo" className={classes.logo} />
-          </NavbarBrand>
-
-          {/* Desktop buttons */}
-          <div className={classes.desktopNav}>
-            <NavItem>
-              <Button
-                className="mx-3 secondary-btn hover-button"
-                onClick={() =>
-                  (window.location.href =
-                    "https://nonprofits.dogoodpoints.com/")
-                }
+    <Navbar expand="md">
+      <Container className={classes.headerContainer}>
+        <NavbarBrand
+          href="https://home.dogoodpoints.com/"
+          onClick={(e) => {
+            e.preventDefault();
+            window.location.href = "https://home.dogoodpoints.com/";
+          }}
+        >
+          <img src="/images/logo.png" alt="Logo" className={classes.logo} />
+        </NavbarBrand>
+        <NavbarToggler
+          onClick={() => setIsOpen((v) => !v)}
+          className={classes.toggler}
+        />
+        <Collapse isOpen={isOpen} navbar className="justify-content-end">
+          <Nav
+            navbar
+            className="ml-auto justify-content-between align-items-center py-3 py-md-4"
+          >
+            <div
+              className={`d-flex flex-md-row flex-column align-items-md-center ${classes.menu}`}
+            >
+              <div
+                className={`d-flex flex-md-row flex-column ${classes.links}`}
               >
-                For Nonprofits
-              </Button>
-            </NavItem>
-            <NavItem>
-              <Button
-                className="primary-btn hover-button"
-                onClick={() =>
-                  (window.location.href = "https://brands.dogoodpoints.com/")
-                }
-              >
-                For Brands
-              </Button>
-            </NavItem>
-          </div>
-
-          {/* Mobile menu toggle */}
-          <NavbarToggler onClick={toggle} className={classes.mobileToggle} />
-        </div>
-
-        {/* Mobile menu */}
-        <Collapse isOpen={isOpen} className={classes.mobileMenu}>
-          <Nav className="flex-column w-100">
-            <NavItem className="mb-3">
-              <Button
-                className="w-100 secondary-btn hover-button"
-                onClick={() =>
-                  (window.location.href =
-                    "https://nonprofits.dogoodpoints.com/")
-                }
-              >
-                For Nonprofits
-              </Button>
-            </NavItem>
-            <NavItem>
-              <Button
-                className="w-100 primary-btn hover-button"
-                onClick={() =>
-                  (window.location.href = "https://brands.dogoodpoints.com/")
-                }
-              >
-                For Brands
-              </Button>
-            </NavItem>
+                <NavItem>
+                  <Button
+                    className={`btn btn-link ${classes.linkBtn}`}
+                    onClick={() => {
+                      window.location.href = "https://about.dogoodpoints.com/";
+                    }}
+                  >
+                    About Us
+                  </Button>
+                </NavItem>
+                <NavItem>
+                  <Button
+                    className={`btn-link ${classes.linkBtn}`}
+                    onClick={openContactWindow}
+                  >
+                    Contact Us
+                  </Button>
+                </NavItem>
+              </div>
+              <div className={`d-flex flex-md-row flex-column ${classes.ctas}`}>
+                <NavItem>
+                  <Button
+                    className={`${classes.primaryBtn} hover-button`}
+                    onClick={() => {
+                      window.location.href = "https://naas.dogoodpoints.com/";
+                    }}
+                  >
+                    NaaS
+                  </Button>
+                </NavItem>
+                <NavItem>
+                  <Button
+                    className="mx-md-3 secondary-btn hover-button"
+                    onClick={() => {
+                      window.location.href =
+                        "https://nonprofits.dogoodpoints.com/";
+                    }}
+                  >
+                    For Nonprofits
+                  </Button>
+                </NavItem>
+              </div>
+            </div>
           </Nav>
         </Collapse>
       </Container>

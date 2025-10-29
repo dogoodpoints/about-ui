@@ -1,0 +1,86 @@
+.container {
+    background: #f4f5f7;
+    color: #0d1012;
+    padding: 96px 20px;
+    text-align: center;
+}
+
+.heading {
+    font-size: 36px;
+    font-weight: 800;
+    margin: 0 0 40px;
+}
+
+.logosRow {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    gap: 40px;
+    max-width: 1000px;
+    margin: 0 auto 48px;
+}
+
+.logoText {
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.logoImg {
+    height: 40px;
+    object-fit: contain;
+    justify-self: center;
+}
+
+.empathyImg {
+    height: 50px;
+    object-fit: contain;
+    justify-self: center;
+}
+
+.calloutBox {
+    max-width: 900px;
+    margin: 0 auto;
+    border: 2px solid #00c6c0;
+    border-radius: 16px;
+    padding: 28px 24px;
+    background: #ffffff;
+}
+
+.checklist {
+    list-style: none;
+    text-align: left;
+    padding: 0 0 0 0;
+    margin: 0;
+}
+
+.checklist li {
+    position: relative;
+    padding-left: 34px;
+    margin: 16px 0;
+    line-height: 1.6;
+}
+
+.checklist li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 22px;
+    height: 22px;
+    background: var(--check-icon) no-repeat center;
+    background-size: contain;
+}
+
+@media (max-width: 900px) {
+    .heading {
+        font-size: 28px;
+    }
+    .logosRow {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .logoText {
+        font-size: 32px;
+    }
+}
+

@@ -13,25 +13,35 @@
 }
 
 .partnerImage {
-    height: 30px;
+    height: 40px;
     width: auto;
-    max-width: 180px;
+    /* max-width: 180px; */
+    object-fit: contain;
+}
+
+.empathyImage {
+    height: 50px;
+    width: auto;
     object-fit: contain;
 }
 
 .heading {
     font-size: 24px;
     font-weight: bold;
+    color: #fff;
 }
 
 @media (max-width: 768px) {
     .container {
         padding: 64px 0;
     }
+
+    .imageContainer {
+        flex-direction: column !important;
+    }
     
     .partnerImage {
-        height: 25px;
-        max-width: 140px;
+        height: 30px;
     }
 }
 
@@ -41,7 +51,6 @@
     }
     
     .partnerImage {
-        height: 20px;
-        max-width: 120px;
+        height: 30px;
     }
 }

@@ -6,12 +6,39 @@
     font-size: 28px;
     overflow-x: hidden;
     max-width: 100%;
+    background-image: var(--hero-bg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 800px;
+    display: flex;
+    align-items: center;
 }
 
+.descriptionTitle {
+    font-size: 48px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 20px;
+    width: 500px;
+    text-align: center;
+}
+
+.titleContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 @media (max-width: 768px) {
     .description {
         font-size: 20px;
         padding: 64px 0;
+        height: 600px;
+    }
+    .descriptionTitle {
+        font-size: 32px !important;
+        width: auto !important;
     }
 }
 
@@ -22,3 +49,26 @@
     }
 }
 
+.descriptionText {
+    font-size: 24px;
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .descriptionText {
+        font-size: 20px;
+    }
+}
+
+.buttonWrapper {
+    margin-top: 32px;
+    display: flex;
+    justify-content: center;
+}
+
+.ctaButton {
+    padding: 18px 28px !important;
+    border-radius: 16px !important;
+    font-weight: 600 !important;
+    background-color: #00c6c0 !important;
+}
