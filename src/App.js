@@ -28,6 +28,7 @@ function App() {
     <>
       <Header />
       <Contact />
+      <Footer />
     </>
   );
 
