@@ -70,7 +70,7 @@ export default function Footer() {
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
               onClick={() => handleClick("https://naas.dogoodpoints.com")}
             >
-              Naas
+              NaaS
             </div>
             <div
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
