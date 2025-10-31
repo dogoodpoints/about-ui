@@ -68,9 +68,9 @@ export default function Footer() {
             <div className={`mb-3 ${classes.footerHeadingStyle}`}>Services</div>
             <div
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
-              onClick={() => handleClick("https://brands.dogoodpoints.com")}
+              onClick={() => handleClick("https://naas.dogoodpoints.com")}
             >
-              For Brands
+              Naas
             </div>
             <div
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
