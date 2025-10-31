@@ -156,8 +156,10 @@
 }
 
 .pricingSubKicker {
-    color: #cfd4d6;
+    color: #ffffff;
     margin: 0 0 12px;
+    font-size: 24px;
+    margin-top: 40px;
 }
 
 .pricingAmountRow {
@@ -171,11 +173,13 @@
 .pricingAmount {
     font-size: 44px;
     font-weight: 800;
+    margin: 16px 0;
 }
 
 .pricingPer {
-    color: #cfd4d6;
+    color: #fff;
     font-weight: 600;
+    font-size: 24px;
 }
 
 .pricingFine {
@@ -192,6 +196,7 @@
     text-decoration: none;
     padding: 12px 18px;
     border-radius: 10px;
+    margin: 12px 0;
 }
 
 .ctaButton:hover {

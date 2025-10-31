@@ -70,7 +70,9 @@ function RegistrationForm() {
         <p className={classes.email}>
           Prefer email? Write us at
           <br />
-          <b>partners@dogoodpoints.com</b>
+          <b href="mailto:partners@dogoodpoints.com">
+            partners@dogoodpoints.com
+          </b>
         </p>
       </Col>
     </Row>

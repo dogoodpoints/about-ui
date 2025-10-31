@@ -16,18 +16,24 @@ function Values() {
           alt="Sun Country Airlines"
         />
         <div className={classes.logoText}>
-          <img src="/images/empathy-black.png" alt="empathy" className={classes.empathyImg} />
+          <img
+            src="/images/empathy-black.png"
+            alt="empathy"
+            className={classes.empathyImg}
+          />
         </div>
       </div>
 
       <div className={classes.calloutBox}>
         <ul
           className={classes.checklist}
-          style={{ '--check-icon': `url(${process.env.PUBLIC_URL}/images/line.png)` }}
+          style={{
+            "--check-icon": `url(${process.env.PUBLIC_URL}/images/line.png)`,
+          }}
         >
           <li>
             Raised in days, not months: Sun Country Airlines launched a
-            successful global giving campaign in days, generating XXX
+            successful global giving campaign in days.
           </li>
           <li>
             Raised thousands in donations through Twitch creator campaigns
@@ -43,7 +49,7 @@ function Values() {
         </ul>
       </div>
     </section>
-  )
+  );
 }
 
 export default Values

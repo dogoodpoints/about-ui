@@ -39,7 +39,11 @@ export default function Contact() {
     async function init() {
       try {
         await loadV2Script();
-        if (!window.hbspt || !window.hbspt.forms || !window.hbspt.forms.create) {
+        if (
+          !window.hbspt ||
+          !window.hbspt.forms ||
+          !window.hbspt.forms.create
+        ) {
           // As a fallback, try developer script (less reliable in React)
           const devScript = document.createElement("script");
           devScript.src = `https://js.hsforms.net/forms/embed/developer/${portalId}.js`;
@@ -52,7 +56,7 @@ export default function Contact() {
           window.hbspt.forms.create({
             portalId,
             formId,
-            target: containerRef.current,
+            target: "#hs-form-root",
           });
         }
       } catch (e) {
@@ -64,8 +68,19 @@ export default function Contact() {
   }, []);
 
   return (
-    <div style={{}}>
-      <div ref={containerRef} id="hs-form-root" />
+    <div
+      style={{
+        minHeight: "60vh",
+        padding: "0",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      <div
+        ref={containerRef}
+        id="hs-form-root"
+        style={{ position: "relative" }}
+      />
     </div>
   );
 }
