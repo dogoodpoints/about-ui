@@ -11,7 +11,7 @@ function Impact() {
       </div>
 
       <p className={classes.subheading}>
-        Operate under DoGood’s established non-profit 501(c)(3) status and gain everything
+        Operate under Do Good’s established non-profit 501(c)(3) status and gain everything
         you need to launch quickly and scale confidently:
       </p>
 <br />
@@ -44,7 +44,7 @@ function Impact() {
       <div className={classes.cards}>
         <div className={classes.card}>
           <h3 className={classes.cardTitle}>Turnkey Fiscal Sponsorship</h3>
-          <p className={classes.cardBody}>Operate under DoGood’s established 501(c)(3) status to accept donations and run campaigns without legal paperwork</p>
+          <p className={classes.cardBody}>Operate under Do Good’s established 501(c)(3) status to accept donations and run campaigns without legal paperwork</p>
         </div>
         <div className={classes.card}>
           <h3 className={classes.cardTitle}>Donation Processing</h3>
@@ -74,7 +74,6 @@ function Impact() {
       <div className={classes.pricingWrap}>
         <h2 className={classes.pricingHeading}>Simple, Transparent Pricing</h2>
         <div>
-          <p className={classes.pricingKicker}>Start Your Mission</p>
           <p className={classes.pricingSubKicker}>Starting at</p>
           <div className={classes.pricingAmountRow}>
             <span className={classes.pricingAmount}>$25.00</span>

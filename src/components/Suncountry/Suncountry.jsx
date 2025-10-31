@@ -22,7 +22,7 @@ function Suncountry() {
           />
           <TextFadeIn>
             <div className={classes.quote}>
-              "DoGood saved us months of legal work and let us launch a global
+              "Do Good saved us months of legal work and let us launch a global
               giving campaign in days."
             </div>
           </TextFadeIn>

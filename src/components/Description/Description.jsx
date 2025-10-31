@@ -18,7 +18,7 @@ function Description() {
             className={`px-4 ${classes.titleContainer}`}
           >
             <h3 className={classes.descriptionTitle}>
-              Launch a Nonprofit In Days–not Years
+              Launch a Nonprofit In Days–Not Years
             </h3>
             <div className={classes.descriptionText}>
               <TextFadeIn>
