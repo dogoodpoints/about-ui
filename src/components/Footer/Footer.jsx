@@ -37,12 +37,12 @@ export default function Footer() {
             >
               Home
             </div>
-            {/* <div
+            <div
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
               onClick={() => handleClick("https://about.dogoodpoints.com")}
             >
               About Us
-            </div> */}
+            </div>
             {/* <div
               className={`mb-2 hover-link ${classes.footerLinkStyle}`}
               onClick={() =>
